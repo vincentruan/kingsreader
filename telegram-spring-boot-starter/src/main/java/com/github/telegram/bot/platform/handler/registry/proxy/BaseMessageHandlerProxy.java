@@ -1,8 +1,5 @@
 package com.github.telegram.bot.platform.handler.registry.proxy;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.util.ReflectionUtils;
 import com.github.telegram.bot.platform.client.command.Reply;
 import com.github.telegram.bot.platform.client.exception.HandlerMethodInvocationException;
 import com.github.telegram.bot.platform.client.exception.TelegramBotApiException;
@@ -10,6 +7,9 @@ import com.github.telegram.bot.platform.handler.MessageHandler;
 import com.github.telegram.bot.platform.handler.registry.MessageHandlerBeanPostProcessor;
 import com.github.telegram.bot.platform.model.UpdateEvent;
 import com.github.telegram.bot.platform.service.MetricsService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Method;
 

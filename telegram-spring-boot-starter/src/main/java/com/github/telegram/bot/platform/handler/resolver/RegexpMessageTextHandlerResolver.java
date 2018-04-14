@@ -1,10 +1,10 @@
 package com.github.telegram.bot.platform.handler.resolver;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import com.github.telegram.bot.platform.handler.MessageHandler;
 import com.github.telegram.bot.platform.handler.RegexpMessageTextHandler;
 import com.github.telegram.bot.platform.model.UpdateEvent;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotNull;
 import java.util.HashMap;
@@ -12,8 +12,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-import static com.google.common.base.Preconditions.checkNotNull;
 import static com.github.telegram.bot.platform.handler.UpdateFunctions.MESSAGE_TEXT_FROM_UPDATE_EVENT;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * @author Sergey Kuptsov

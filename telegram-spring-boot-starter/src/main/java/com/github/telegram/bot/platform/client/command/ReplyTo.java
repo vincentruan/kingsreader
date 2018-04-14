@@ -1,8 +1,8 @@
 package com.github.telegram.bot.platform.client.command;
 
+import com.github.telegram.bot.platform.model.UpdateEvent;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Message;
-import com.github.telegram.bot.platform.model.UpdateEvent;
 
 import javax.validation.constraints.NotNull;
 

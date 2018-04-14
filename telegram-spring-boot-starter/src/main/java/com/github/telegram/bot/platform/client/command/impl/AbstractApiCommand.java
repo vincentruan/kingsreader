@@ -1,12 +1,12 @@
 package com.github.telegram.bot.platform.client.command.impl;
 
+import com.github.telegram.bot.platform.client.command.ApiCommand;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.github.telegram.bot.platform.client.command.ApiCommand;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;

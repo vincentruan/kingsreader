@@ -1,15 +1,16 @@
 package com.github.telegram.bot.platform.config;
 
-import com.ning.http.client.AsyncHttpClient;
-import com.ning.http.client.AsyncHttpClientConfig;
+import com.github.telegram.bot.platform.client.TelegramBotApi;
+import com.github.telegram.bot.platform.client.impl.TelegramBotApiImpl;
 import lombok.Getter;
+import org.asynchttpclient.AsyncHttpClient;
+import org.asynchttpclient.DefaultAsyncHttpClient;
+import org.asynchttpclient.DefaultAsyncHttpClientConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
-import com.github.telegram.bot.platform.client.TelegramBotApi;
-import com.github.telegram.bot.platform.client.impl.TelegramBotApiImpl;
 
 /**
  * @author Sergey Kuptsov
@@ -37,9 +38,6 @@ public class ApiCommandSenderConfiguration {
     @Value("${telegram.client.connectTimeout:10000}")
     private Integer connectTimeout;
 
-    @Value("${telegram.client.allowPoolingConnections:true}")
-    private Boolean allowPoolingConnections;
-
     @Autowired
     private ClientProxyConfiguration clientProxyConfiguration;
 
@@ -53,15 +51,13 @@ public class ApiCommandSenderConfiguration {
     }
 
     private AsyncHttpClient getClient() {
-        AsyncHttpClientConfig.Builder asyncHttpClientConfigBuilder = new AsyncHttpClientConfig.Builder()
-                .setAllowPoolingConnections(allowPoolingConnections)
+        DefaultAsyncHttpClientConfig.Builder asyncHttpClientConfigBuilder = new DefaultAsyncHttpClientConfig.Builder()
                 .setConnectTimeout(connectTimeout)
                 .setReadTimeout(readTimeout)
                 .setMaxRequestRetry(maxRequestRetry)
                 .setMaxConnectionsPerHost(maxConnectionsPerHost)
                 .setProxyServer(clientProxyConfiguration.getProxyServer());
 
-        return new AsyncHttpClient(asyncHttpClientConfigBuilder
-                .build());
+        return new DefaultAsyncHttpClient(asyncHttpClientConfigBuilder.build());
     }
 }

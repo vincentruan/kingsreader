@@ -1,8 +1,8 @@
 package com.github.telegram.bot.platform.client.command.impl;
 
+import com.github.telegram.bot.platform.client.TelegramBotApi;
 import org.telegram.telegrambots.api.methods.BotApiMethod;
 import org.telegram.telegrambots.api.objects.Message;
-import com.github.telegram.bot.platform.client.TelegramBotApi;
 
 import javax.validation.constraints.NotNull;
 import java.util.concurrent.Future;

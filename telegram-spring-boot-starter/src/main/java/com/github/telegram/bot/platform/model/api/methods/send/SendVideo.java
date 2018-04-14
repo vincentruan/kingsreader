@@ -64,14 +64,14 @@ public class SendVideo extends BotApiMethod<Message> {
         return chatId;
     }
 
-    public SendVideo setChatId(Long chatId) {
-        Objects.requireNonNull(chatId);
-        this.chatId = chatId.toString();
+    public SendVideo setChatId(String chatId) {
+        this.chatId = chatId;
         return this;
     }
 
-    public SendVideo setChatId(String chatId) {
-        this.chatId = chatId;
+    public SendVideo setChatId(Long chatId) {
+        Objects.requireNonNull(chatId);
+        this.chatId = chatId.toString();
         return this;
     }
 

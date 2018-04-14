@@ -1,5 +1,10 @@
 package com.github.telegram.bot.platform.repository;
 
+import com.github.telegram.bot.platform.client.TelegramBotApi;
+import com.github.telegram.bot.platform.config.UpdatesRepositoryConfiguration;
+import com.github.telegram.bot.platform.model.UpdateEvent;
+import com.github.telegram.bot.platform.model.UpdateEvents;
+import com.github.telegram.bot.platform.service.MetricsService;
 import com.google.common.eventbus.EventBus;
 import com.google.common.util.concurrent.AbstractExecutionThreadService;
 import org.slf4j.Logger;
@@ -8,19 +13,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 import org.telegram.telegrambots.api.objects.Update;
-import com.github.telegram.bot.platform.client.TelegramBotApi;
-import com.github.telegram.bot.platform.config.UpdatesRepositoryConfiguration;
-import com.github.telegram.bot.platform.model.UpdateEvent;
-import com.github.telegram.bot.platform.model.UpdateEvents;
-import com.github.telegram.bot.platform.service.MetricsService;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import java.util.Date;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
-import static org.joda.time.DateTime.now;
-import static org.joda.time.DateTimeZone.UTC;
 
 /**
  * @author Sergey Kuptsov
@@ -63,7 +62,7 @@ public class UpdatesRepository extends AbstractExecutionThreadService {
         return UpdateEvents.builder()
                 .updateEventList(updates.stream().map(update -> UpdateEvent.builder()
                         .update(update)
-                        .received(now(UTC))
+                        .received(new Date())
                         .build())
                         .collect(toList()))
                 .build();

@@ -1,9 +1,9 @@
 package com.github.telegram.bot.platform.handler.resolver;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import com.github.telegram.bot.platform.handler.MessageTextMessageHandler;
 import com.github.telegram.bot.platform.model.UpdateEvent;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Set;

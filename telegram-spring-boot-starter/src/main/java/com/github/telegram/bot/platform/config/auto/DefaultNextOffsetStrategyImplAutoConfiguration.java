@@ -1,10 +1,10 @@
 package com.github.telegram.bot.platform.config.auto;
 
+import com.github.telegram.bot.platform.client.NextOffsetStrategy;
+import com.github.telegram.bot.platform.client.impl.InMemoryNextOffsetStrategyImpl;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import com.github.telegram.bot.platform.client.NextOffsetStrategy;
-import com.github.telegram.bot.platform.client.impl.InMemoryNextOffsetStrategyImpl;
 
 /**
  * @author Sergey Kuptsov

@@ -3,16 +3,18 @@ package com.github.telegram.bot.platform.client.impl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ning.http.client.AsyncCompletionHandler;
-import com.ning.http.client.AsyncHttpClient;
-import com.ning.http.client.Request;
-import com.ning.http.client.Response;
-import org.apache.http.HttpStatus;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import com.github.telegram.bot.platform.client.TelegramBotHttpClient;
 import com.github.telegram.bot.platform.client.exception.TelegramBotApiException;
 import com.github.telegram.bot.platform.model.ExecutionResult;
+import org.apache.commons.io.IOUtils;
+import org.apache.http.HttpStatus;
+import org.asynchttpclient.AsyncCompletionHandler;
+import org.asynchttpclient.AsyncHttpClient;
+import org.asynchttpclient.BoundRequestBuilder;
+import org.asynchttpclient.Request;
+import org.asynchttpclient.Response;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nullable;
 import javax.annotation.PreDestroy;
@@ -54,7 +56,7 @@ public class TelegramBotHttpClientImpl implements TelegramBotHttpClient {
                                     @Nullable Map<String, String> params,
                                     @NotNull JavaType returnType) throws TelegramBotApiException {
 
-        AsyncHttpClient.BoundRequestBuilder requestBuilder =
+        BoundRequestBuilder requestBuilder =
                 httpClient.prepareGet(formUrl(method));
 
         setParams(params, requestBuilder);
@@ -68,7 +70,7 @@ public class TelegramBotHttpClientImpl implements TelegramBotHttpClient {
             @Nullable V requestObject,
             @NotNull JavaType returnType) throws TelegramBotApiException {
 
-        AsyncHttpClient.BoundRequestBuilder requestBuilder;
+        BoundRequestBuilder requestBuilder;
 
         requestBuilder = httpClient.preparePost(formUrl(method));
         requestBuilder.setHeader("Content-Type", "application/json");
@@ -78,7 +80,7 @@ public class TelegramBotHttpClientImpl implements TelegramBotHttpClient {
         return execute(requestBuilder.build(), returnType);
     }
 
-    private <T> void setBody(@Nullable T requestObject, AsyncHttpClient.BoundRequestBuilder requestBuilder) {
+    private <T> void setBody(@Nullable T requestObject, BoundRequestBuilder requestBuilder) {
         if (requestObject != null) {
             try {
                 requestBuilder.setBody(jsonMapper.writeValueAsBytes(requestObject));
@@ -96,7 +98,7 @@ public class TelegramBotHttpClientImpl implements TelegramBotHttpClient {
         return apiUrl + "/" + method;
     }
 
-    private void setParams(@Nullable Map<String, String> params, AsyncHttpClient.BoundRequestBuilder requestBuilder) {
+    private void setParams(@Nullable Map<String, String> params, BoundRequestBuilder requestBuilder) {
         ofNullable(params)
                 .ifPresent(parameters ->
                         parameters.entrySet().stream()
@@ -121,22 +123,13 @@ public class TelegramBotHttpClientImpl implements TelegramBotHttpClient {
             public T onCompleted(Response httpResponse) throws Exception {
                 log.debug("Got response : {}", httpResponse);
 
-                try {
-                    log.debug("Got response : {}", httpResponse.getResponseBody());
-                } catch (IOException e) {
-                    log.error("Error while getting response body", e);
-                }
-
                 checkHttpStatuses(httpResponse);
 
                 ExecutionResult<T> executionResult;
                 try {
                     executionResult = jsonMapper.readValue(
                             httpResponse.getResponseBodyAsBytes(),
-                            jsonMapper.getTypeFactory().constructParametrizedType(
-                                    ExecutionResult.class,
-                                    ExecutionResult.class,
-                                    returnType));
+                            jsonMapper.getTypeFactory().constructParametricType(ExecutionResult.class, returnType));
                 } catch (IOException e) {
                     throw new TelegramBotApiException("Error while deserializing request object from response", e);
                 }
@@ -161,7 +154,7 @@ public class TelegramBotHttpClientImpl implements TelegramBotHttpClient {
 
     private <T> void checkExecutionResult(ExecutionResult<T> executionResult) {
         if (!executionResult.isOk()) {
-            throw new TelegramBotApiException("Request not succeeded with code " + executionResult.getError_code());
+            throw new TelegramBotApiException("Request not succeeded with code " + executionResult.getErrorCode());
         }
     }
 
@@ -175,6 +168,6 @@ public class TelegramBotHttpClientImpl implements TelegramBotHttpClient {
 
     @PreDestroy
     public void destroy() {
-        httpClient.close();
+        IOUtils.closeQuietly(httpClient);
     }
 }

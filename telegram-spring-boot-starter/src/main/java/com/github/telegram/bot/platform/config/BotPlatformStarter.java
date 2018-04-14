@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
+import static com.github.telegram.bot.platform.config.TelegramBotClientConfiguration.TELEGRAM_CLIENT_TOKEN;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.ImmutableList.copyOf;
@@ -13,7 +14,6 @@ import static com.google.common.collect.ImmutableList.of;
 import static com.google.common.collect.Lists.newArrayList;
 import static java.lang.String.format;
 import static org.springframework.boot.SpringApplication.run;
-import static com.github.telegram.bot.platform.config.TelegramBotClientConfiguration.TELEGRAM_CLIENT_TOKEN;
 
 /**
  * @author Sergey Kuptsov
@@ -21,7 +21,7 @@ import static com.github.telegram.bot.platform.config.TelegramBotClientConfigura
  */
 public class BotPlatformStarter {
     private static final Logger log = LoggerFactory.getLogger(BotPlatformStarter.class);
-    private static final Class BOT_PLATFORM_CONFIGURATION_CLASS = BotPlatformConfiguration.class;
+    private static final Class<BotPlatformConfiguration> BOT_PLATFORM_CONFIGURATION_CLASS = BotPlatformConfiguration.class;
     private static final List<Class<?>> configs = newArrayList(BOT_PLATFORM_CONFIGURATION_CLASS);
 
     public static void start(@NotNull List<Class<?>> configurations, @NotNull String[] args) {
@@ -51,6 +51,7 @@ public class BotPlatformStarter {
 
     private static void start(String[] args) {
         log.debug("Starting bot platfrom with configurations [{}]", configs);
-        run(copyOf(configs).toArray(), args);
+        Class[] configClassArray = new Class[configs.size()];
+        run(copyOf(configs).toArray(configClassArray), args);
     }
 }

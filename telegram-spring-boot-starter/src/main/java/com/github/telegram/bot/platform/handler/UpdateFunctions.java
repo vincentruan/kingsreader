@@ -1,7 +1,7 @@
 package com.github.telegram.bot.platform.handler;
 
-import org.telegram.telegrambots.api.objects.Message;
 import com.github.telegram.bot.platform.model.UpdateEvent;
+import org.telegram.telegrambots.api.objects.Message;
 
 import java.util.function.Function;
 

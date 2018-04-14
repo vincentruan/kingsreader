@@ -1,13 +1,5 @@
 package com.github.telegram.bot.platform.handler.registry;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
-import org.springframework.core.MethodParameter;
-import org.springframework.stereotype.Component;
 import com.github.telegram.bot.platform.client.command.Reply;
 import com.github.telegram.bot.platform.handler.annotation.MessageMapping;
 import com.github.telegram.bot.platform.handler.registry.proxy.CallbackQueryDataMessageProxy;
@@ -20,6 +12,14 @@ import com.github.telegram.bot.platform.handler.resolver.MessageTextMessageHandl
 import com.github.telegram.bot.platform.handler.resolver.RegexpMessageTextHandlerResolver;
 import com.github.telegram.bot.platform.model.UpdateEvent;
 import com.github.telegram.bot.platform.service.MetricsService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+import org.springframework.core.MethodParameter;
+import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
 

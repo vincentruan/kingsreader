@@ -1,9 +1,9 @@
 package com.github.telegram.bot.platform.handler.resolver;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import com.github.telegram.bot.platform.handler.MessageHandler;
 import com.github.telegram.bot.platform.model.UpdateEvent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.validation.constraints.NotNull;
 import java.util.HashMap;

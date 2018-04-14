@@ -1,10 +1,10 @@
 package com.github.telegram.bot.platform.worker.saver.impl;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import com.github.telegram.bot.platform.model.UpdateEvent;
 import com.github.telegram.bot.platform.model.UpdateEvents;
 import com.github.telegram.bot.platform.worker.saver.UpdatesSaver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.validation.constraints.NotNull;
 import java.util.Objects;

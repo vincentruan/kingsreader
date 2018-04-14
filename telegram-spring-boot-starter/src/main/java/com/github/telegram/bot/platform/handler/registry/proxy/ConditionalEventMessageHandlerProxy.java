@@ -1,10 +1,10 @@
 package com.github.telegram.bot.platform.handler.registry.proxy;
 
-import com.google.common.base.Preconditions;
 import com.github.telegram.bot.platform.handler.ConditionMessageHandler;
 import com.github.telegram.bot.platform.handler.annotation.MessageFilter;
 import com.github.telegram.bot.platform.model.UpdateEvent;
 import com.github.telegram.bot.platform.service.MetricsService;
+import com.google.common.base.Preconditions;
 
 import javax.validation.constraints.NotNull;
 

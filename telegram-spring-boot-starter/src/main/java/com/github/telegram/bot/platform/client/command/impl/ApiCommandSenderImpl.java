@@ -1,5 +1,9 @@
 package com.github.telegram.bot.platform.client.command.impl;
 
+import com.github.telegram.bot.platform.client.TelegramBotApi;
+import com.github.telegram.bot.platform.client.command.ApiCommand;
+import com.github.telegram.bot.platform.client.command.ApiCommandSender;
+import com.github.telegram.bot.platform.config.ApiCommandSenderConfiguration;
 import com.google.common.util.concurrent.AbstractExecutionThreadService;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import org.slf4j.Logger;
@@ -7,17 +11,19 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
-import com.github.telegram.bot.platform.client.TelegramBotApi;
-import com.github.telegram.bot.platform.client.command.ApiCommand;
-import com.github.telegram.bot.platform.client.command.ApiCommandSender;
-import com.github.telegram.bot.platform.config.ApiCommandSenderConfiguration;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import java.util.concurrent.*;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
-import static com.google.common.util.concurrent.MoreExecutors.shutdownAndAwaitTermination;
 import static com.github.telegram.bot.platform.client.command.ApiCommand.EMPTY_CALLBACK;
+import static com.google.common.util.concurrent.MoreExecutors.shutdownAndAwaitTermination;
 
 /**
  * @author Sergey Kuptsov

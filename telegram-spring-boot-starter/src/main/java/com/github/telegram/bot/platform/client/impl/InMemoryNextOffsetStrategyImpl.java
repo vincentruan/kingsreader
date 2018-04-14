@@ -1,9 +1,9 @@
 package com.github.telegram.bot.platform.client.impl;
 
+import com.github.telegram.bot.platform.client.NextOffsetStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jmx.export.naming.IdentityNamingStrategy;
-import com.github.telegram.bot.platform.client.NextOffsetStrategy;
 
 import javax.validation.constraints.NotNull;
 import java.util.concurrent.atomic.AtomicInteger;

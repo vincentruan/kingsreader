@@ -1,14 +1,14 @@
 package com.github.telegram.bot.platform.worker.saver.impl;
 
 import com.codahale.metrics.annotation.Timed;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import com.github.telegram.bot.platform.config.UpdatesWorkerRepositoryConfiguration;
 import com.github.telegram.bot.platform.model.UpdateEvent;
 import com.github.telegram.bot.platform.model.UpdateEvents;
 import com.github.telegram.bot.platform.worker.saver.UpdatesSaver;
 import com.github.telegram.bot.platform.worker.saver.UpdatesWorkerRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
 import javax.validation.constraints.NotNull;

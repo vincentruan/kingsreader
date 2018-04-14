@@ -16,5 +16,5 @@ public class ExecutionResult<T> {
     private boolean ok;
     private T result;
     private String description;
-    private Integer error_code;
+    private Integer errorCode;
 }

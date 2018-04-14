@@ -4,9 +4,9 @@ import com.codahale.metrics.Histogram;
 import com.codahale.metrics.Meter;
 import com.codahale.metrics.MetricRegistry;
 import com.codahale.metrics.SlidingWindowReservoir;
+import com.github.telegram.bot.platform.handler.registry.proxy.HandlerMethod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import com.github.telegram.bot.platform.handler.registry.proxy.HandlerMethod;
 
 import javax.annotation.PostConstruct;
 

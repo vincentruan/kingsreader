@@ -1,8 +1,8 @@
 package com.github.telegram.bot.platform.client.command.impl;
 
+import com.github.telegram.bot.platform.model.api.methods.send.SendDocument;
 import lombok.Getter;
 import lombok.ToString;
-import com.github.telegram.bot.platform.model.api.methods.send.SendDocument;
 
 /**
  * @author Sergey Kuptsov

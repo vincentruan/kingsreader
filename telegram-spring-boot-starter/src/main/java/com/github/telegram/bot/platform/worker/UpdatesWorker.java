@@ -1,5 +1,10 @@
 package com.github.telegram.bot.platform.worker;
 
+import com.github.telegram.bot.platform.client.command.ApiCommandSender;
+import com.github.telegram.bot.platform.config.WorkerConfiguration;
+import com.github.telegram.bot.platform.model.UpdateEvent;
+import com.github.telegram.bot.platform.model.UpdateEvents;
+import com.github.telegram.bot.platform.worker.saver.UpdatesWorkerRepository;
 import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
@@ -9,11 +14,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import com.github.telegram.bot.platform.client.command.ApiCommandSender;
-import com.github.telegram.bot.platform.config.WorkerConfiguration;
-import com.github.telegram.bot.platform.model.UpdateEvent;
-import com.github.telegram.bot.platform.model.UpdateEvents;
-import com.github.telegram.bot.platform.worker.saver.UpdatesWorkerRepository;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -21,10 +21,12 @@ import javax.validation.constraints.NotNull;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-import static com.google.common.util.concurrent.MoreExecutors.shutdownAndAwaitTermination;
 import static com.github.telegram.bot.platform.model.UpdateEvent.EMPTY;
+import static com.google.common.util.concurrent.MoreExecutors.shutdownAndAwaitTermination;
 
 /**
  * @author Sergey Kuptsov
@@ -79,12 +81,14 @@ public class UpdatesWorker extends AbstractExecutionThreadService {
     protected void startUp() {
         eventBus.register(this);
 
-        updatesWorkerExecutor = Executors.newFixedThreadPool(
-                workerConfiguration.getThreadCount(),
+        updatesWorkerExecutor = new ThreadPoolExecutor(workerConfiguration.getThreadCount(), workerConfiguration.getThreadCount(),
+                0L, TimeUnit.MILLISECONDS,
+                new LinkedBlockingQueue<Runnable>(),
                 new ThreadFactoryBuilder()
                         .setDaemon(true)
                         .setNameFormat("UpdatesWorkerTask-%d")
                         .build());
+
 
         apiCommandSenderExecutor = Executors.newSingleThreadExecutor(
                 new ThreadFactoryBuilder()
@@ -99,7 +103,7 @@ public class UpdatesWorker extends AbstractExecutionThreadService {
                 updatesWorkerExecutor,
                 workerConfiguration.getShutdownTimeout(),
                 workerConfiguration.getShutdownTimeoutTimeUnit());
-        shutdownAndAwaitTermination(apiCommandSenderExecutor, 1, TimeUnit.SECONDS);
+        shutdownAndAwaitTermination(apiCommandSenderExecutor, 5, TimeUnit.SECONDS);
     }
 
     @PostConstruct

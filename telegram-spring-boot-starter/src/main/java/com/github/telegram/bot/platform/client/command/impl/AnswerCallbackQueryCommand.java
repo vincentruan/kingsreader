@@ -1,7 +1,7 @@
 package com.github.telegram.bot.platform.client.command.impl;
 
-import org.telegram.telegrambots.api.methods.AnswerCallbackQuery;
 import com.github.telegram.bot.platform.client.TelegramBotApi;
+import org.telegram.telegrambots.api.methods.AnswerCallbackQuery;
 
 import java.util.concurrent.Future;
 import java.util.function.Consumer;

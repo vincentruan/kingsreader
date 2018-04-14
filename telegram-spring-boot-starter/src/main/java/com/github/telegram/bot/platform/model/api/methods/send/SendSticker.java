@@ -55,14 +55,14 @@ public class SendSticker extends BotApiMethod<Message> {
         return chatId;
     }
 
-    public SendSticker setChatId(Long chatId) {
-        Objects.requireNonNull(chatId);
-        this.chatId = chatId.toString();
+    public SendSticker setChatId(String chatId) {
+        this.chatId = chatId;
         return this;
     }
 
-    public SendSticker setChatId(String chatId) {
-        this.chatId = chatId;
+    public SendSticker setChatId(Long chatId) {
+        Objects.requireNonNull(chatId);
+        this.chatId = chatId.toString();
         return this;
     }
 

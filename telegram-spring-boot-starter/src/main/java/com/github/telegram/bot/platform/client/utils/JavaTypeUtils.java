@@ -1,7 +1,6 @@
 package com.github.telegram.bot.platform.client.utils;
 
 import com.fasterxml.jackson.databind.JavaType;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 
 import java.util.List;
@@ -13,21 +12,18 @@ import java.util.Map;
  */
 public class JavaTypeUtils {
 
-    private static final ObjectMapper mapper = new ObjectMapper();
+    private static final TypeFactory TYPE_FACTORY = TypeFactory.defaultInstance();
 
     public static JavaType listTypeOf(Class<?> parameterClass) {
-        return getTypeFactory().constructCollectionType(List.class, parameterClass);
+        return TYPE_FACTORY.constructCollectionType(List.class, parameterClass);
     }
 
     public static JavaType simpleTypeOf(Class<?> parameterClass) {
-        return getTypeFactory().constructType(parameterClass);
+        return TYPE_FACTORY.constructType(parameterClass);
     }
 
     public static JavaType mapTypeOf(Class<?> keyClass, Class<?> valueClass) {
-        return getTypeFactory().constructMapType(Map.class, keyClass, valueClass);
+        return TYPE_FACTORY.constructMapType(Map.class, keyClass, valueClass);
     }
 
-    private static TypeFactory getTypeFactory() {
-        return mapper.getTypeFactory();
-    }
 }

@@ -57,14 +57,14 @@ public class SendDocument extends BotApiMethod<Message> {
         return chatId;
     }
 
-    public SendDocument setChatId(Long chatId) {
-        Objects.requireNonNull(chatId);
-        this.chatId = chatId.toString();
+    public SendDocument setChatId(String chatId) {
+        this.chatId = chatId;
         return this;
     }
 
-    public SendDocument setChatId(String chatId) {
-        this.chatId = chatId;
+    public SendDocument setChatId(Long chatId) {
+        Objects.requireNonNull(chatId);
+        this.chatId = chatId.toString();
         return this;
     }
 

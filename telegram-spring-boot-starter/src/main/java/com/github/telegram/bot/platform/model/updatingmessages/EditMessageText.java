@@ -71,14 +71,14 @@ public class EditMessageText extends BotApiMethod<Message> {
         return chatId;
     }
 
-    public EditMessageText setChatId(Long chatId) {
-        Objects.requireNonNull(chatId);
-        this.chatId = chatId.toString();
+    public EditMessageText setChatId(String chatId) {
+        this.chatId = chatId;
         return this;
     }
 
-    public EditMessageText setChatId(String chatId) {
-        this.chatId = chatId;
+    public EditMessageText setChatId(Long chatId) {
+        Objects.requireNonNull(chatId);
+        this.chatId = chatId.toString();
         return this;
     }
 

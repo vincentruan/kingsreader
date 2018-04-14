@@ -77,14 +77,14 @@ public class SendAudio extends BotApiMethod<Message> {
         return chatId;
     }
 
-    public SendAudio setChatId(Long chatId) {
-        Objects.requireNonNull(chatId);
-        this.chatId = chatId.toString();
+    public SendAudio setChatId(String chatId) {
+        this.chatId = chatId;
         return this;
     }
 
-    public SendAudio setChatId(String chatId) {
-        this.chatId = chatId;
+    public SendAudio setChatId(Long chatId) {
+        Objects.requireNonNull(chatId);
+        this.chatId = chatId.toString();
         return this;
     }
 

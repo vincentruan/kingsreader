@@ -1,12 +1,18 @@
 package com.github.telegram.bot.platform.client;
 
+import com.github.telegram.bot.platform.client.command.Reply;
+import com.github.telegram.bot.platform.client.impl.TelegramBotApiImpl;
 import org.telegram.telegrambots.api.methods.AnswerCallbackQuery;
 import org.telegram.telegrambots.api.methods.AnswerInlineQuery;
 import org.telegram.telegrambots.api.methods.BotApiMethod;
 import org.telegram.telegrambots.api.methods.GetUserProfilePhotos;
-import org.telegram.telegrambots.api.objects.*;
-import com.github.telegram.bot.platform.client.command.Reply;
-import com.github.telegram.bot.platform.client.impl.TelegramBotApiImpl;
+import org.telegram.telegrambots.api.objects.Chat;
+import org.telegram.telegrambots.api.objects.ChatMember;
+import org.telegram.telegrambots.api.objects.File;
+import org.telegram.telegrambots.api.objects.Message;
+import org.telegram.telegrambots.api.objects.Update;
+import org.telegram.telegrambots.api.objects.User;
+import org.telegram.telegrambots.api.objects.UserProfilePhotos;
 
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
@@ -26,7 +32,7 @@ public interface TelegramBotApi {
 
     TelegramBotApiImpl.CommandExecutionWrapper<User> getMe();
 
-    TelegramBotApiImpl.CommandExecutionWrapper<File> getFile(@NotNull String file_id);
+    TelegramBotApiImpl.CommandExecutionWrapper<File> getFile(@NotNull String fileId);
 
     TelegramBotApiImpl.CommandExecutionWrapper<UserProfilePhotos> getUserProfilePhotos(@NotNull GetUserProfilePhotos getUserProfilePhotos);
 

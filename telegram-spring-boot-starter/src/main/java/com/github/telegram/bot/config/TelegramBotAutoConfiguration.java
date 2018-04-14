@@ -18,16 +18,15 @@ import org.telegram.telegrambots.exceptions.TelegramApiException;
 import org.telegram.telegrambots.exceptions.TelegramApiRequestException;
 import org.telegram.telegrambots.generics.BotSession;
 import org.telegram.telegrambots.logging.BotLogger;
-import org.telegram.telegrambots.logging.BotsFileHandler;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Auto configuration for telegram bots to automatically start bots that are configured as beans.
+ *
  * @author xabgesagtx
  */
 @Configuration
@@ -35,99 +34,93 @@ import java.util.List;
 @ConditionalOnClass(TelegramBotsApi.class)
 public class TelegramBotAutoConfiguration {
 
-	private List<BotSession> sessions = new ArrayList<>();
-	
-	@Autowired(required=false)
-	private List<TelegramLongPollingBot> pollingBots = new ArrayList<>();
-	
-	@Autowired(required=false)
-	private List<TelegramWebhookBot> webHookBots = new ArrayList<>();
-
-	@Getter
-	@Setter
-	private String externalUrl = null;
-
-	@Getter
-	@Setter
-	private String internalUrl = null;
-
-	@Getter
-	@Setter
-	private String keyStore = null;
-
-	@Getter
-	@Setter
-	private String keyStorePassword;
-
-	@Getter
-	@Setter
-	private String pathToCertificate;
-	
-	static {
+    static {
         // SLF4JBridgeHandler.install();
         BotLogger.registerLogger(new SLF4JBridgeHandler());
-		ApiContextInitializer.init();
-	}
-	
-	@PostConstruct
-	public void start() throws TelegramApiRequestException {
-		log.info("Starting auto config for telegram bots");
-		TelegramBotsApi api = getApi();
-		pollingBots.forEach(bot -> {
-			try {
-				log.info("Registering polling bot: {}", bot.getBotUsername());
-				sessions.add(api.registerBot(bot));
-			} catch (TelegramApiException e) {
-				log.error("Failed to register bot {} due to error {}", bot.getBotUsername(), e.getMessage());
-			}			
-		});
-		webHookBots.forEach(bot -> {
-			try {
-				log.info("Registering web hook bot: {}", bot.getBotUsername());
-				api.registerBot(bot);
-			} catch (TelegramApiException e) {
-				log.error("Failed to register bot {} due to error {}", bot.getBotUsername(), e.getMessage());
-			}			
-		});
-	}
+        ApiContextInitializer.init();
+    }
 
-	/**
-	 * Get API object depending on configured properties.
-	 * If no properties are configured, the API object won't support webhooks.
-	 * @return api object
-	 * @throws TelegramApiRequestException
-	 */
-	@Bean
-	@ConditionalOnMissingBean
-	public TelegramBotsApi getApi() throws TelegramApiRequestException {
-		TelegramBotsApi result;
-		if (!StringUtils.isEmpty(externalUrl) && !StringUtils.isEmpty(internalUrl)) {
-			if (!StringUtils.isEmpty(keyStore) && !StringUtils.isEmpty(keyStorePassword)) {
-				if (!StringUtils.isEmpty(pathToCertificate)) {
-					log.info("Initializing API with webhook support and configured keystore and path to certificate");
-					result = new TelegramBotsApi(keyStore, keyStorePassword, externalUrl, internalUrl, pathToCertificate);
-				} else {
-					log.info("Initializing API with webhook support and configured keystore");
-					result = new TelegramBotsApi(keyStore, keyStorePassword, externalUrl, internalUrl);
-				}
-			} else {
-				log.info("Initializing API with webhook support");
-				result = new TelegramBotsApi(externalUrl, internalUrl);
-			}
-		} else {
-			log.info("Initializing API without webhook support");
-			result = new TelegramBotsApi();
-		}
-		return result;
-	}
+    private List<BotSession> sessions = new ArrayList<>();
+    @Autowired(required = false)
+    private List<TelegramLongPollingBot> pollingBots = new ArrayList<>();
+    @Autowired(required = false)
+    private List<TelegramWebhookBot> webHookBots = new ArrayList<>();
+    @Getter
+    @Setter
+    private String externalUrl = null;
+    @Getter
+    @Setter
+    private String internalUrl = null;
+    @Getter
+    @Setter
+    private String keyStore = null;
+    @Getter
+    @Setter
+    private String keyStorePassword;
+    @Getter
+    @Setter
+    private String pathToCertificate;
 
-	@PreDestroy
-	public void stop() {
-		sessions.forEach(session -> {
-			if (session != null) {
-				session.stop();
-			}	
-		});
-	}
-	
+    @PostConstruct
+    public void start() throws TelegramApiRequestException {
+        log.info("Starting auto config for telegram bots");
+        TelegramBotsApi api = getApi();
+        pollingBots.forEach(bot -> {
+            try {
+                log.info("Registering polling bot: {}", bot.getBotUsername());
+                sessions.add(api.registerBot(bot));
+            } catch (TelegramApiException e) {
+                log.error("Failed to register bot {} due to error {}", bot.getBotUsername(), e.getMessage());
+            }
+        });
+        webHookBots.forEach(bot -> {
+            try {
+                log.info("Registering web hook bot: {}", bot.getBotUsername());
+                api.registerBot(bot);
+            } catch (TelegramApiException e) {
+                log.error("Failed to register bot {} due to error {}", bot.getBotUsername(), e.getMessage());
+            }
+        });
+    }
+
+    /**
+     * Get API object depending on configured properties.
+     * If no properties are configured, the API object won't support webhooks.
+     *
+     * @return api object
+     * @throws TelegramApiRequestException
+     */
+    @Bean
+    @ConditionalOnMissingBean
+    public TelegramBotsApi getApi() throws TelegramApiRequestException {
+        TelegramBotsApi result;
+        if (!StringUtils.isEmpty(externalUrl) && !StringUtils.isEmpty(internalUrl)) {
+            if (!StringUtils.isEmpty(keyStore) && !StringUtils.isEmpty(keyStorePassword)) {
+                if (!StringUtils.isEmpty(pathToCertificate)) {
+                    log.info("Initializing API with webhook support and configured keystore and path to certificate");
+                    result = new TelegramBotsApi(keyStore, keyStorePassword, externalUrl, internalUrl, pathToCertificate);
+                } else {
+                    log.info("Initializing API with webhook support and configured keystore");
+                    result = new TelegramBotsApi(keyStore, keyStorePassword, externalUrl, internalUrl);
+                }
+            } else {
+                log.info("Initializing API with webhook support");
+                result = new TelegramBotsApi(externalUrl, internalUrl);
+            }
+        } else {
+            log.info("Initializing API without webhook support");
+            result = new TelegramBotsApi();
+        }
+        return result;
+    }
+
+    @PreDestroy
+    public void stop() {
+        sessions.forEach(session -> {
+            if (session != null) {
+                session.stop();
+            }
+        });
+    }
+
 }

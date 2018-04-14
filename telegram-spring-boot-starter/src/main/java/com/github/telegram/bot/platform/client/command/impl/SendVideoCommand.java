@@ -1,8 +1,8 @@
 package com.github.telegram.bot.platform.client.command.impl;
 
+import com.github.telegram.bot.platform.model.api.methods.send.SendVideo;
 import lombok.Getter;
 import lombok.ToString;
-import com.github.telegram.bot.platform.model.api.methods.send.SendVideo;
 
 /**
  * @author Sergey Kuptsov

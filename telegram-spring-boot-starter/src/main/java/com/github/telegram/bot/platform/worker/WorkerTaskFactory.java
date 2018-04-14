@@ -1,15 +1,15 @@
 package com.github.telegram.bot.platform.worker;
 
 import com.codahale.metrics.annotation.Timed;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import com.github.telegram.bot.platform.client.command.ApiCommand;
 import com.github.telegram.bot.platform.handler.MessageHandler;
 import com.github.telegram.bot.platform.handler.resolver.EventMessageHandlerResolver;
 import com.github.telegram.bot.platform.model.UpdateEvent;
 import com.github.telegram.bot.platform.service.MetricsService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  * @author Sergey Kuptsov

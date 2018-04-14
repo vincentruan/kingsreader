@@ -1,10 +1,10 @@
 package com.github.telegram.bot.platform.handler.resolver;
 
+import com.github.telegram.bot.platform.handler.CallbackQueryDataMessageHandler;
+import com.github.telegram.bot.platform.model.UpdateEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.api.objects.CallbackQuery;
-import com.github.telegram.bot.platform.handler.CallbackQueryDataMessageHandler;
-import com.github.telegram.bot.platform.model.UpdateEvent;
 
 import java.util.List;
 import java.util.Set;

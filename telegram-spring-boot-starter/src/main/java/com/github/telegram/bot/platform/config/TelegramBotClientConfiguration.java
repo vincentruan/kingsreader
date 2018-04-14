@@ -2,12 +2,12 @@ package com.github.telegram.bot.platform.config;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ning.http.client.AsyncHttpClient;
+import com.github.telegram.bot.platform.client.TelegramBotHttpClient;
+import com.github.telegram.bot.platform.client.impl.TelegramBotHttpClientImpl;
+import org.asynchttpclient.AsyncHttpClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import com.github.telegram.bot.platform.client.TelegramBotHttpClient;
-import com.github.telegram.bot.platform.client.impl.TelegramBotHttpClientImpl;
 
 /**
  * @author Sergey Kuptsov

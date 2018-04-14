@@ -1,16 +1,32 @@
 package com.github.telegram.bot.platform.client.impl;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.telegram.telegrambots.api.methods.*;
-import org.telegram.telegrambots.api.methods.groupadministration.*;
-import org.telegram.telegrambots.api.objects.*;
 import com.github.telegram.bot.platform.client.NextOffsetStrategy;
 import com.github.telegram.bot.platform.client.TelegramBotApi;
 import com.github.telegram.bot.platform.client.TelegramBotHttpClient;
 import com.github.telegram.bot.platform.client.command.Reply;
 import com.github.telegram.bot.platform.client.exception.TelegramBotApiException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.telegram.telegrambots.api.methods.AnswerCallbackQuery;
+import org.telegram.telegrambots.api.methods.AnswerInlineQuery;
+import org.telegram.telegrambots.api.methods.BotApiMethod;
+import org.telegram.telegrambots.api.methods.GetFile;
+import org.telegram.telegrambots.api.methods.GetMe;
+import org.telegram.telegrambots.api.methods.GetUserProfilePhotos;
+import org.telegram.telegrambots.api.methods.groupadministration.GetChat;
+import org.telegram.telegrambots.api.methods.groupadministration.GetChatAdministrators;
+import org.telegram.telegrambots.api.methods.groupadministration.GetChatMemberCount;
+import org.telegram.telegrambots.api.methods.groupadministration.KickChatMember;
+import org.telegram.telegrambots.api.methods.groupadministration.LeaveChat;
+import org.telegram.telegrambots.api.methods.groupadministration.UnbanChatMember;
+import org.telegram.telegrambots.api.objects.Chat;
+import org.telegram.telegrambots.api.objects.ChatMember;
+import org.telegram.telegrambots.api.objects.File;
+import org.telegram.telegrambots.api.objects.Message;
+import org.telegram.telegrambots.api.objects.Update;
+import org.telegram.telegrambots.api.objects.User;
+import org.telegram.telegrambots.api.objects.UserProfilePhotos;
 
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
@@ -18,12 +34,11 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
+import static com.github.telegram.bot.platform.client.utils.JavaTypeUtils.listTypeOf;
+import static com.github.telegram.bot.platform.client.utils.JavaTypeUtils.simpleTypeOf;
 import static com.google.common.collect.ImmutableMap.of;
 import static java.util.Comparator.comparingInt;
 import static org.telegram.telegrambots.api.methods.send.SendSticker.CHATID_FIELD;
-import static com.github.telegram.bot.platform.client.impl.TelegramBotApiImpl.CommandExecutionWrapper.from;
-import static com.github.telegram.bot.platform.client.utils.JavaTypeUtils.listTypeOf;
-import static com.github.telegram.bot.platform.client.utils.JavaTypeUtils.simpleTypeOf;
 
 /**
  * @author Sergey Kuptsov
@@ -92,10 +107,10 @@ public class TelegramBotApiImpl implements TelegramBotApi {
     }
 
     @Override
-    public CommandExecutionWrapper<File> getFile(@NotNull String file_id) {
+    public CommandExecutionWrapper<File> getFile(@NotNull String fileId) {
         return CommandExecutionWrapper.from(client.executeGet(
                 GetFile.PATH,
-                of(FILEID_FIELD, file_id),
+                of(FILEID_FIELD, fileId),
                 simpleTypeOf(File.class)
         ));
     }
