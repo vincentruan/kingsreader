@@ -1,28 +1,5 @@
 #!/bin/sh
-#set JAVA_HOME
-#JAVA_HOME=/usr/alibaba/java
-
-#check JAVA_HOME & java
-noJavaHome=false
-if [ -z "$JAVA_HOME" ] ; then
-    noJavaHome=true
-fi
-if [ ! -e "$JAVA_HOME/bin/java" ] ; then
-    noJavaHome=true
-fi
-if $noJavaHome ; then
-    echo
-    echo "Error: JAVA_HOME environment variable is not set."
-    echo
-    exit 1
-fi
-#==============================================================================
-
-#set JAVA_OPTS
-JAVA_OPTS="-Xss256k"
-#==============================================================================
-
-DIR=`pwd`
+CURR_DIR=`pwd`
 cd `dirname $0`
 cd ../lib
 LIB_DIR=`pwd`
@@ -41,4 +18,4 @@ do
 done
 
 echo "stop success! pid:"${PIDS}
-cd ${DIR}
+cd ${CURR_DIR}

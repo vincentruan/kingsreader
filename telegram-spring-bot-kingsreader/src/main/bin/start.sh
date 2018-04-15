@@ -1,5 +1,4 @@
 #!/bin/sh
-
 #check JAVA_HOME & java
 noJavaHome=false
 if [ -z "$JAVA_HOME" ] ; then
