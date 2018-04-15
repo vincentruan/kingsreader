@@ -7,6 +7,7 @@ import com.github.telegram.bot.platform.model.UpdateEvents;
 import com.github.telegram.bot.platform.service.MetricsService;
 import com.google.common.eventbus.EventBus;
 import com.google.common.util.concurrent.AbstractExecutionThreadService;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +27,8 @@ import static java.util.stream.Collectors.toList;
  * @since 22/05/2016
  */
 @Repository
+@Slf4j
 public class UpdatesRepository extends AbstractExecutionThreadService {
-    private final static Logger logger = LoggerFactory.getLogger(UpdatesRepository.class);
 
     @Autowired
     private UpdatesRepositoryConfiguration updatesRepositoryConfiguration;
@@ -45,12 +46,12 @@ public class UpdatesRepository extends AbstractExecutionThreadService {
     @Override
     protected void run() throws Exception {
         while (isRunning()) {
-            logger.debug("Start pooling new updates");
+            log.debug("Start pooling new updates");
             List<Update> updates = botApi.getNextUpdates(
                     updatesRepositoryConfiguration.getPoolingLimit(),
                     updatesRepositoryConfiguration.getPoolingTimeout());
 
-            logger.debug("Received following updates: {}", updates);
+            log.debug("Received following updates: {}", updates);
 
             eventBus.post(createUpdateEvents(updates));
 

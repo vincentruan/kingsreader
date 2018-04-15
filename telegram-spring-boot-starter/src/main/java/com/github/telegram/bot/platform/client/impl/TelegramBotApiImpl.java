@@ -5,6 +5,7 @@ import com.github.telegram.bot.platform.client.TelegramBotApi;
 import com.github.telegram.bot.platform.client.TelegramBotHttpClient;
 import com.github.telegram.bot.platform.client.command.Reply;
 import com.github.telegram.bot.platform.client.exception.TelegramBotApiException;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,9 +45,9 @@ import static org.telegram.telegrambots.api.methods.send.SendSticker.CHATID_FIEL
  * @author Sergey Kuptsov
  * @since 22/05/2016
  */
+@Slf4j
 public class TelegramBotApiImpl implements TelegramBotApi {
     private static final String FILEID_FIELD = "file_id";
-    private final Logger log = LoggerFactory.getLogger(TelegramBotApiImpl.class);
 
     private final TelegramBotHttpClient client;
 

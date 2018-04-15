@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,8 +21,8 @@ import java.util.function.Consumer;
 @Setter
 @ToString
 @AllArgsConstructor
+@Slf4j
 public abstract class AbstractApiCommand<T> implements ApiCommand<T> {
-    private final Logger log = LoggerFactory.getLogger(AbstractApiCommand.class);
 
     private Consumer<T> callback = EMPTY_CALLBACK;
 
@@ -30,7 +31,7 @@ public abstract class AbstractApiCommand<T> implements ApiCommand<T> {
         try {
             callback.accept(future.get());
         } catch (InterruptedException | ExecutionException e) {
-            log.error("Got execution exception {}", e);
+            log.error("Got execution exception", e);
         }
     }
 }

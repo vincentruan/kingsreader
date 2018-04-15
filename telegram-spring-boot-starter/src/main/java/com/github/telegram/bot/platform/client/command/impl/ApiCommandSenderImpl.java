@@ -6,6 +6,7 @@ import com.github.telegram.bot.platform.client.command.ApiCommandSender;
 import com.github.telegram.bot.platform.config.ApiCommandSenderConfiguration;
 import com.google.common.util.concurrent.AbstractExecutionThreadService;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +31,8 @@ import static com.google.common.util.concurrent.MoreExecutors.shutdownAndAwaitTe
  * @since 01/06/2016
  */
 @Component
+@Slf4j
 public class ApiCommandSenderImpl extends AbstractExecutionThreadService implements ApiCommandSender {
-    private Logger log = LoggerFactory.getLogger(ApiCommandSenderImpl.class);
 
     @Autowired
     private ApiCommandSenderConfiguration apiCommandSenderConfiguration;

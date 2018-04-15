@@ -41,22 +41,29 @@ public class TelegramBotAutoConfiguration {
     }
 
     private List<BotSession> sessions = new ArrayList<>();
+
     @Autowired(required = false)
     private List<TelegramLongPollingBot> pollingBots = new ArrayList<>();
+
     @Autowired(required = false)
     private List<TelegramWebhookBot> webHookBots = new ArrayList<>();
+
     @Getter
     @Setter
     private String externalUrl = null;
+
     @Getter
     @Setter
     private String internalUrl = null;
+
     @Getter
     @Setter
     private String keyStore = null;
+
     @Getter
     @Setter
     private String keyStorePassword;
+
     @Getter
     @Setter
     private String pathToCertificate;

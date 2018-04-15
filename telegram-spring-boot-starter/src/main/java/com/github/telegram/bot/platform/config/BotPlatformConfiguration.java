@@ -28,7 +28,7 @@ public class BotPlatformConfiguration {
     static {
         // SLF4JBridgeHandler.install();
         BotLogger.registerLogger(new SLF4JBridgeHandler());
-        ApiContextInitializer.init();
+        // ApiContextInitializer.init();
     }
 
 }

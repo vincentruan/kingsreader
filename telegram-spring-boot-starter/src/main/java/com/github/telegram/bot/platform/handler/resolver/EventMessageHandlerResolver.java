@@ -2,6 +2,7 @@ package com.github.telegram.bot.platform.handler.resolver;
 
 import com.github.telegram.bot.platform.handler.MessageHandler;
 import com.github.telegram.bot.platform.model.UpdateEvent;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +15,8 @@ import javax.annotation.PostConstruct;
  * @since 31/05/2016
  */
 @Component
+@Slf4j
 public class EventMessageHandlerResolver implements MessageHandlerResolver {
-    private final Logger log = LoggerFactory.getLogger(EventMessageHandlerResolver.class);
 
     @Autowired
     private MessageTextMessageHandlerResolver messageTextMessageHandlerResolver;

@@ -13,23 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.telegram.bot;
-
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-import static com.github.telegram.bot.platform.config.TelegramBotClientConfiguration.TELEGRAM_CLIENT_TOKEN;
-import static java.lang.String.format;
+package com.github.telegram.bot.handler;
 
 /**
  * @author vincentruan
  * @version 1.0.0
  */
-@SpringBootApplication
-public class KingsReaderApp {
-
-    public static void main(String[] args) {
-        SpringApplication.run(KingsReaderApp.class, format("--%s=%s", TELEGRAM_CLIENT_TOKEN, "{token}"));
-    }
-
+public class EBookAutoSendHandler {
 }

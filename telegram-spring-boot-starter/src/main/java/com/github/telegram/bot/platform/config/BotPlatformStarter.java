@@ -1,7 +1,6 @@
 package com.github.telegram.bot.platform.config;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -19,8 +18,8 @@ import static org.springframework.boot.SpringApplication.run;
  * @author Sergey Kuptsov
  * @since 04/07/2016
  */
+@Slf4j
 public class BotPlatformStarter {
-    private static final Logger log = LoggerFactory.getLogger(BotPlatformStarter.class);
     private static final Class<BotPlatformConfiguration> BOT_PLATFORM_CONFIGURATION_CLASS = BotPlatformConfiguration.class;
     private static final List<Class<?>> configs = newArrayList(BOT_PLATFORM_CONFIGURATION_CLASS);
 

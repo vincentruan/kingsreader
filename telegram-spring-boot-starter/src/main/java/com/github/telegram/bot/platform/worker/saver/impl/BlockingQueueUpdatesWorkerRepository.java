@@ -6,6 +6,7 @@ import com.github.telegram.bot.platform.model.UpdateEvent;
 import com.github.telegram.bot.platform.model.UpdateEvents;
 import com.github.telegram.bot.platform.worker.saver.UpdatesSaver;
 import com.github.telegram.bot.platform.worker.saver.UpdatesWorkerRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +22,8 @@ import static com.github.telegram.bot.platform.model.UpdateEvent.EMPTY;
  * @author Sergey Kuptsov
  * @since 30/05/2016
  */
+@Slf4j
 public class BlockingQueueUpdatesWorkerRepository implements UpdatesWorkerRepository {
-    private final Logger log = LoggerFactory.getLogger(BlockingQueueUpdatesWorkerRepository.class);
 
     @Autowired
     private UpdatesWorkerRepositoryConfiguration updatesWorkerRepositoryConfiguration;

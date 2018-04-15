@@ -16,7 +16,6 @@ import javax.validation.constraints.NotNull;
  */
 @Component
 public class DefaultEventMessageHandlerResolver extends AbstractMessageHandlerResolver {
-    private final Logger log = LoggerFactory.getLogger(DefaultEventMessageHandlerResolver.class);
 
     private final DefaultMessageHandler defaultEventProcessor;
 

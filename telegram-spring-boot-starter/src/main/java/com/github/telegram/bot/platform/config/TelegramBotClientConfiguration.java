@@ -8,6 +8,9 @@ import org.asynchttpclient.AsyncHttpClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.util.Assert;
+
+import javax.annotation.PostConstruct;
 
 /**
  * @author Sergey Kuptsov
@@ -18,7 +21,7 @@ public class TelegramBotClientConfiguration {
 
     public static final String TELEGRAM_CLIENT_TOKEN = "telegram.client.token";
 
-    @Value("${" + TELEGRAM_CLIENT_TOKEN + "}")
+    @Value("${" + TELEGRAM_CLIENT_TOKEN + ":''}")
     private String clientToken;
 
     @Value("${telegram.client.baseUrl:https://api.telegram.org}")
@@ -38,5 +41,10 @@ public class TelegramBotClientConfiguration {
                 asyncHttpClient,
                 clientToken,
                 baseUrl);
+    }
+
+    @PostConstruct
+    public void init() {
+        Assert.hasText(clientToken, TELEGRAM_CLIENT_TOKEN + " must be config!");
     }
 }

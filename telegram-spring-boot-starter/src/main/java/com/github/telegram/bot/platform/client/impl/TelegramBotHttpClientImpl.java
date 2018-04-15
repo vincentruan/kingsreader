@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.telegram.bot.platform.client.TelegramBotHttpClient;
 import com.github.telegram.bot.platform.client.exception.TelegramBotApiException;
 import com.github.telegram.bot.platform.model.ExecutionResult;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpStatus;
 import org.asynchttpclient.AsyncCompletionHandler;
@@ -29,8 +30,9 @@ import static java.util.Optional.ofNullable;
  * @author Sergey Kuptsov
  * @since 22/05/2016
  */
+@Slf4j
 public class TelegramBotHttpClientImpl implements TelegramBotHttpClient {
-    private static final Logger log = LoggerFactory.getLogger(TelegramBotHttpClientImpl.class);
+
     private final static String BOT_PREFIX = "/bot";
 
     private final ObjectMapper jsonMapper;

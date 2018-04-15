@@ -96,8 +96,7 @@ public class CallbackMethodTest extends AbstractJUnit4SpringContextTests {
         when(future.get()).thenReturn(returnMessage);
         when(future.get(anyLong(), any(TimeUnit.class))).thenReturn(returnMessage);
 
-        when(telegramBotApi.sendMessage(argThat(new SendMessageObjectMatcher(sendMessage))))
-                .thenReturn(from(future));
+        when(telegramBotApi.sendMessage(argThat(new SendMessageObjectMatcher(sendMessage)))).thenReturn(from(future));
 
         eventBus.post(UpdateEvents.builder()
                 .updateEventList(ImmutableList.of(updateEvent))

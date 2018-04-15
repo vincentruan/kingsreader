@@ -13,7 +13,6 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @since 22/05/2016
  */
 public class InMemoryNextOffsetStrategyImpl implements NextOffsetStrategy {
-    private final Logger log = LoggerFactory.getLogger(IdentityNamingStrategy.class);
 
     private final AtomicInteger counter = new AtomicInteger(0);
 

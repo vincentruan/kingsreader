@@ -2,6 +2,7 @@ package com.github.telegram.bot.platform.handler.registry;
 
 import com.github.telegram.bot.platform.handler.annotation.MessageHandler;
 import com.github.telegram.bot.platform.handler.annotation.MessageMapping;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
@@ -26,8 +27,8 @@ import static org.springframework.core.annotation.AnnotationUtils.findAnnotation
  * @since 20/07/2016
  */
 @Component
+@Slf4j
 public class MessageHandlerBeanPostProcessor implements InitializingBean, Ordered, ApplicationContextAware {
-    private static final Logger log = LoggerFactory.getLogger(MessageHandlerBeanPostProcessor.class);
     private static final String SCOPED_TARGET_NAME_PREFIX = "scopedTarget.";
 
     private ApplicationContext applicationContext = null;

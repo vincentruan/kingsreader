@@ -12,6 +12,7 @@ import com.github.telegram.bot.platform.handler.resolver.MessageTextMessageHandl
 import com.github.telegram.bot.platform.handler.resolver.RegexpMessageTextHandlerResolver;
 import com.github.telegram.bot.platform.model.UpdateEvent;
 import com.github.telegram.bot.platform.service.MetricsService;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
@@ -33,8 +34,8 @@ import static org.springframework.util.StringUtils.isEmpty;
  * @since 23/07/2016
  */
 @Component
+@Slf4j
 public class MappingRegistry implements ApplicationContextAware {
-    private static final Logger log = LoggerFactory.getLogger(MappingRegistry.class);
 
     @Autowired
     private MessageTextMessageHandlerResolver messageTextMessageHandlerResolver;

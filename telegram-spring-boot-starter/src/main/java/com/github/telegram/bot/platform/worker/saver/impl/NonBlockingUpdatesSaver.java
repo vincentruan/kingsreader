@@ -3,6 +3,7 @@ package com.github.telegram.bot.platform.worker.saver.impl;
 import com.github.telegram.bot.platform.model.UpdateEvent;
 import com.github.telegram.bot.platform.model.UpdateEvents;
 import com.github.telegram.bot.platform.worker.saver.UpdatesSaver;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,8 +19,8 @@ import static java.util.Optional.ofNullable;
  * @author Sergey Kuptsov
  * @since 30/05/2016
  */
+@Slf4j
 public final class NonBlockingUpdatesSaver implements UpdatesSaver {
-    private final Logger log = LoggerFactory.getLogger(NonBlockingUpdatesSaver.class);
 
     private final BlockingQueue<UpdateEvent> updatesQueue;
 

@@ -1,5 +1,5 @@
 /*
- * Copyright [2018] [70611]
+ * Copyright [2018] [vincentruan]
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@ import com.github.telegram.bot.platform.config.BotPlatformStarter;
 import com.github.telegram.bot.platform.handler.annotation.MessageHandler;
 import com.github.telegram.bot.platform.handler.annotation.MessageMapping;
 import com.github.telegram.bot.platform.model.UpdateEvent;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.api.objects.User;
@@ -32,6 +33,7 @@ import static com.github.telegram.bot.platform.client.command.ReplyTo.to;
  * @version 1.0.0
  */
 @MessageHandler
+@Slf4j
 public class GreetingHandler {
 
     @Autowired
@@ -42,6 +44,7 @@ public class GreetingHandler {
         User me = api.getMe().get();
 
         Message reply = api.reply(to(updateEvent).withMessage(getMessageText(me))).get();
+        log.info("{}", reply);
 
         return to(updateEvent).withMessage("Yes, that is me above!!!");
     }

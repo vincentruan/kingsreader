@@ -10,8 +10,7 @@ import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 import com.google.common.util.concurrent.AbstractExecutionThreadService;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -33,8 +32,8 @@ import static com.google.common.util.concurrent.MoreExecutors.shutdownAndAwaitTe
  * @since 22/05/2016
  */
 @Component
+@Slf4j
 public class UpdatesWorker extends AbstractExecutionThreadService {
-    private final static Logger logger = LoggerFactory.getLogger(UpdatesWorker.class);
 
     @Autowired
     private EventBus eventBus;
@@ -58,7 +57,7 @@ public class UpdatesWorker extends AbstractExecutionThreadService {
     @AllowConcurrentEvents
     @Subscribe
     public void handleUpdateEvents(@NotNull UpdateEvents updateEvents) {
-        logger.debug("Received event {}", updateEvents);
+        log.debug("Received event {}", updateEvents);
         updatesWorkerRepository.save(updateEvents);
     }
 
@@ -108,13 +107,11 @@ public class UpdatesWorker extends AbstractExecutionThreadService {
 
     @PostConstruct
     public void init() {
-        startAsync()
-                .awaitRunning();
+        startAsync().awaitRunning();
     }
 
     @PreDestroy
     public void destroy() {
-        stopAsync()
-                .awaitTerminated();
+        stopAsync().awaitTerminated();
     }
 }

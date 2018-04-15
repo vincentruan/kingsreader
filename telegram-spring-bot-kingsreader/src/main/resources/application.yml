@@ -1,3 +1,6 @@
-bot:
-  token: test
-  username: test
+logging:
+  config: classpath:log4j2.yml
+telegram:
+  client:
+    token: test
+    username: test

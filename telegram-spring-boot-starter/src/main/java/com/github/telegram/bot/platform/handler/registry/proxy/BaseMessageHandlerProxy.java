@@ -7,6 +7,7 @@ import com.github.telegram.bot.platform.handler.MessageHandler;
 import com.github.telegram.bot.platform.handler.registry.MessageHandlerBeanPostProcessor;
 import com.github.telegram.bot.platform.model.UpdateEvent;
 import com.github.telegram.bot.platform.service.MetricsService;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.ReflectionUtils;
@@ -17,8 +18,8 @@ import java.lang.reflect.Method;
  * @author Sergey Kuptsov
  * @since 24/07/2016
  */
+@Slf4j
 public abstract class BaseMessageHandlerProxy implements MessageHandler {
-    private static final Logger log = LoggerFactory.getLogger(MessageHandlerBeanPostProcessor.class);
 
     private final HandlerMethod handlerMethod;
 

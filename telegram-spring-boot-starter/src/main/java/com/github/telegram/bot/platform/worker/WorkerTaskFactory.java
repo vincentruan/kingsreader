@@ -17,7 +17,6 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class WorkerTaskFactory {
-    private final Logger log = LoggerFactory.getLogger(WorkerTaskFactory.class);
 
     @Autowired
     private EventMessageHandlerResolver eventProcessorResolver;

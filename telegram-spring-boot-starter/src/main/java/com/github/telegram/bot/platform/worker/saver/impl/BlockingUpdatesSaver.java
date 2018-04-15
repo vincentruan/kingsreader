@@ -3,6 +3,7 @@ package com.github.telegram.bot.platform.worker.saver.impl;
 import com.github.telegram.bot.platform.model.UpdateEvent;
 import com.github.telegram.bot.platform.model.UpdateEvents;
 import com.github.telegram.bot.platform.worker.saver.UpdatesSaver;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,8 +20,8 @@ import static java.util.concurrent.TimeUnit.MILLISECONDS;
  * @author Sergey Kuptsov
  * @since 30/05/2016
  */
+@Slf4j
 public class BlockingUpdatesSaver implements UpdatesSaver {
-    private final Logger log = LoggerFactory.getLogger(BlockingUpdatesSaver.class);
 
     private final BlockingQueue<UpdateEvent> updatesQueue;
 

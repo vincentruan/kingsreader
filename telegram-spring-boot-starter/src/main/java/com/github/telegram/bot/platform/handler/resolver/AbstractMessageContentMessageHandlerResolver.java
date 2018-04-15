@@ -2,6 +2,7 @@ package com.github.telegram.bot.platform.handler.resolver;
 
 import com.github.telegram.bot.platform.handler.MessageHandler;
 import com.github.telegram.bot.platform.model.UpdateEvent;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,9 +17,9 @@ import static org.springframework.util.StringUtils.isEmpty;
  * @author Sergey Kuptsov
  * @since 06/06/2016
  */
+@Slf4j
 public abstract class AbstractMessageContentMessageHandlerResolver extends AbstractMessageHandlerResolver {
     protected final Map<Object, MessageHandler> messageContentProcessorMap = new HashMap<>();
-    private final Logger log = LoggerFactory.getLogger(AbstractMessageContentMessageHandlerResolver.class);
 
     public void add(@NotNull Object object, @NotNull MessageHandler messageHandler) {
         if (isEmpty(object)) {
