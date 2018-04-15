@@ -6,7 +6,7 @@
 
     <parent>
         <groupId>com.github.telegram</groupId>
-        <artifactId>spring-bot</artifactId>
+        <artifactId>telegram-spring-bot</artifactId>
         <version>1.0.0</version>
     </parent>
 

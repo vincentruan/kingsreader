@@ -11,17 +11,50 @@
     </parent>
 
     <groupId>com.github.telegram</groupId>
-    <artifactId>spring-bot</artifactId>
+    <artifactId>telegram-spring-bot</artifactId>
     <version>1.0.0</version>
     <packaging>pom</packaging>
     <name>${project.artifactId}</name>
-    <description>Just do IT???</description>
+    <description>A telegram bot framework build on Spring boot!</description>
 
     <modules>
         <module>telegram-spring-boot-starter</module>
         <module>telegram-spring-bot-sdk</module>
         <module>telegram-spring-bot-kingsreader</module>
     </modules>
+
+    <licenses>
+        <license>
+            <name>Apache License 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <scm>
+        <connection>scm:git@github.com:vincentruan/telegram-spring-bot.git</connection>
+        <developerConnection>scm:git@github.com:vincentruan/telegram-spring-bot.git</developerConnection>
+        <url>https://github.com/vincentruan/telegram-spring-bot</url>
+    </scm>
+    <issueManagement>
+        <url>https://github.com/vincentruan/telegram-spring-bot/issues</url>
+        <system>GitHub Issues</system>
+    </issueManagement>
+
+    <mailingLists>
+        <mailingList>
+            <name>Vincent Ruan</name>
+            <post>rzw0813@gmail.com</post>
+        </mailingList>
+    </mailingLists>
+
+    <developers>
+        <developer>
+            <id>vincentruan</id>
+            <name>Vincent Ruan</name>
+            <email>rzw0813@gmail.com</email>
+            <timezone>8</timezone>
+        </developer>
+    </developers>
 
     <repositories>
         <repository>
@@ -126,17 +159,6 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>repackage</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
                 <artifactId>maven-clean-plugin</artifactId>
                 <version>3.0.0</version>
                 <executions>
@@ -145,29 +167,6 @@
                         <phase>clean</phase>
                         <goals>
                             <goal>clean</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <version>3.1.0</version>
-                <configuration>
-                    <archive>
-                        <manifest>
-                            <mainClass>com.github.telegram.bot.KingsReaderApp</mainClass>
-                        </manifest>
-                    </archive>
-                    <descriptorRefs>
-                        <descriptorRef>jar-with-dependencies</descriptorRef>
-                    </descriptorRefs>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>make-assembly</id> <!-- this is used for inheritance merges -->
-                        <phase>package</phase> <!-- bind to the packaging phase -->
-                        <goals>
-                            <goal>single</goal>
                         </goals>
                     </execution>
                 </executions>
@@ -187,22 +186,7 @@
                 </executions>
             </plugin>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>3.1.0</version>
-                <configuration>
-                    <archive>
-                        <manifest>
-                            <addClasspath>true</addClasspath>
-                            <mainClass>org.telegram.Main</mainClass>
-                        </manifest>
-                    </archive>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.0.0</version>
                 <executions>
                     <execution>
                         <id>attach-javadocs</id>
@@ -214,7 +198,7 @@
                 </executions>
             </plugin>
         </plugins>
-        <pluginManagement>
+        <!--<pluginManagement>
             <plugins>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -246,7 +230,7 @@
                     </configuration>
                 </plugin>
             </plugins>
-        </pluginManagement>
+        </pluginManagement>-->
     </build>
 
 </project>
