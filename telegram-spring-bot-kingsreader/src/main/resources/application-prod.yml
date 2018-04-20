@@ -1,0 +1,6 @@
+logging:
+  config: classpath:logback-spring.xml
+telegram:
+  client:
+    token: test
+    username: test

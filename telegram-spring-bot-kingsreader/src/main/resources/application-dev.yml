@@ -1,0 +1,11 @@
+logging:
+  level:
+    root: warn
+    org.springframework: info
+    org.springframework.boot: info
+    com.github.telegram.bot: debug
+  path: F:\dm\logs\telegram-spring-bot-kingsreader
+telegram:
+  client:
+    token: test
+    username: test

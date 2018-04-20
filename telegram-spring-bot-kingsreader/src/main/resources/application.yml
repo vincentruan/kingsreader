@@ -1,5 +1,10 @@
+spring:
+  profiles:
+    active: dev
 logging:
-  config: classpath:log4j2.yml
+  level:
+    org.springframework.web: info
+    org.springframework.boot: info
 telegram:
   client:
     token: test
