@@ -10,7 +10,7 @@
         <version>2.0.1.RELEASE</version>
     </parent>
 
-    <groupId>com.github.telegram</groupId>
+    <groupId>com.github.springtg</groupId>
     <artifactId>telegram-spring-bot</artifactId>
     <version>1.0.0</version>
     <packaging>pom</packaging>
@@ -19,6 +19,7 @@
 
     <modules>
         <module>telegram-spring-boot-starter</module>
+        <module>dropbox-spring-boot-starter</module>
         <module>telegram-spring-bot-sdk</module>
         <module>telegram-spring-bot-kingsreader</module>
     </modules>

@@ -3,7 +3,7 @@ logging:
     root: warn
     org.springframework: info
     org.springframework.boot: info
-    com.github.telegram.bot: debug
+    com.github.springtg.bot: debug
 telegram:
   client:
     token: test

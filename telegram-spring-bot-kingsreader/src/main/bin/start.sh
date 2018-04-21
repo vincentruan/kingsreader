@@ -42,7 +42,7 @@ cd `dirname $0`
 cd ../lib
 LIB_DIR=`pwd`
 
-SERVER_NAME='com.github.telegram.bot.KingsReaderApp'
+SERVER_NAME='com.github.springtg.bot.KingsReaderApp'
 
 PIDS=`ps -ef | grep java | grep "$LIB_DIR" | grep ${SERVER_NAME} | awk '{print $2}'`
 if [ -n "$PIDS" ]; then

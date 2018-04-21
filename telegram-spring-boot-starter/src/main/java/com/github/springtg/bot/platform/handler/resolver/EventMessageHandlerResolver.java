@@ -1,0 +1,55 @@
+package com.github.springtg.bot.platform.handler.resolver;
+
+import com.github.springtg.bot.platform.handler.MessageHandler;
+import com.github.springtg.bot.platform.model.UpdateEvent;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import javax.annotation.PostConstruct;
+
+/**
+ * @author Sergey Kuptsov
+ * @since 31/05/2016
+ */
+@Component
+@Slf4j
+public class EventMessageHandlerResolver implements MessageHandlerResolver {
+
+    @Autowired
+    private MessageTextMessageHandlerResolver messageTextMessageHandlerResolver;
+
+    @Autowired
+    private CallbackQueryDataMessageHandlerResolver callbackQueryDataMessageHandlerResolver;
+
+    @Autowired
+    private ConditionEventMessageHandlerResolver conditionEventMessageHandlerResolver;
+
+    @Autowired
+    private RegexpMessageTextHandlerResolver regexpMessageTextHandlerResolver;
+
+    @Autowired
+    private DefaultEventMessageHandlerResolver defaultEventProcessor;
+
+    @Override
+    public MessageHandler resolve(UpdateEvent updateEvent) {
+        log.debug("Resolving processor for event {}", updateEvent);
+
+        return messageTextMessageHandlerResolver.resolve(updateEvent);
+    }
+
+    @Override
+    public MessageHandlerResolver setNext(MessageHandlerResolver messageHandlerResolver) {
+        return null;
+    }
+
+    @PostConstruct
+    public void init() {
+        //todo: add custom sorting?
+        messageTextMessageHandlerResolver
+                .setNext(callbackQueryDataMessageHandlerResolver)
+                .setNext(regexpMessageTextHandlerResolver)
+                .setNext(conditionEventMessageHandlerResolver)
+                .setNext(defaultEventProcessor);
+    }
+}

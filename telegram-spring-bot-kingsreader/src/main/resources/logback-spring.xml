@@ -50,7 +50,7 @@
         </encoder>
     </appender>
 
-    <logger name="com.github.telegram.bot" level="INFO" />
+    <logger name="com.github.springtg.bot" level="INFO"/>
 
     <springProfile name="prod">
         <root level="DEBUG">
