@@ -4,8 +4,11 @@ logging:
     org.springframework: info
     org.springframework.boot: info
     com.github.telegram.bot: debug
-  path: F:\dm\logs\telegram-spring-bot-kingsreader
 telegram:
   client:
     token: test
     username: test
+    proxy:
+      host: proxy.webank.com
+      port: 8080
+      nonProxyHosts: localhost

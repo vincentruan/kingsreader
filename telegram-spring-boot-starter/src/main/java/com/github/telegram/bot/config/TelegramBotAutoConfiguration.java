@@ -29,9 +29,9 @@ import java.util.List;
  *
  * @author xabgesagtx
  */
-@Configuration
+//@Configuration
 @Slf4j
-@ConditionalOnClass(TelegramBotsApi.class)
+//@ConditionalOnClass(TelegramBotsApi.class)
 public class TelegramBotAutoConfiguration {
 
     static {

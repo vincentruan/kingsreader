@@ -26,6 +26,14 @@ public class ClientProxyConfiguration {
     private String password;
     private List<String> nonProxyHosts;
 
+    /**
+     * 鉴权方式
+     * only active when principal and password had been set
+     *
+     * @see org.asynchttpclient.Realm.AuthScheme
+     */
+    private Realm.AuthScheme authScheme;
+
     private ProxyServer proxyServer;
 
     public void setProxyType(ProxyType proxyType) {
@@ -80,14 +88,46 @@ public class ClientProxyConfiguration {
         }
     }
 
+    public void setAuthScheme(String authScheme) {
+        if (StringUtils.hasText(authScheme)) {
+            Realm.AuthScheme[] allAuthSchemes = Realm.AuthScheme.values();
+            StringBuilder sb = new StringBuilder();
+            boolean isFirst = true;
+            for (Realm.AuthScheme realmAuthSchema : allAuthSchemes) {
+                if (isFirst) {
+                    sb.append(realmAuthSchema.name());
+                } else {
+                    sb.append(',').append(realmAuthSchema.name());
+                }
+                if (realmAuthSchema.name().equalsIgnoreCase(authScheme)) {
+                    this.authScheme = realmAuthSchema;
+                    break;
+                }
+                isFirst = false;
+            }
+            throw new IllegalArgumentException("auth-scheme must in Realm.AuthScheme list [" + sb.toString() + "], case insensitive!");
+        }
+    }
+
     @PostConstruct
     public void init() {
         if (host != null && port != null) {
-            proxyServer = new ProxyServer.Builder(host, port)
-                    .setProxyType(proxyType)
-                    .setNonProxyHosts(nonProxyHosts)
-                    .setRealm(new Realm.Builder(principal, password))
-                    .build();
+            ProxyServer.Builder proxyServerBuilder = new ProxyServer.Builder(host, port).setProxyType(proxyType).setNonProxyHosts(nonProxyHosts);
+
+            // 鉴权设置
+            if (StringUtils.hasLength(principal) && StringUtils.hasLength(password)) {
+                Realm.Builder realmBuilder = new Realm.Builder(principal, password);
+
+                if (null == authScheme) {
+                    realmBuilder.setScheme(Realm.AuthScheme.BASIC);
+                } else {
+                    realmBuilder.setScheme(authScheme);
+                }
+
+                proxyServerBuilder.setRealm(realmBuilder);
+            }
+
+            proxyServer = proxyServerBuilder.build();
         }
     }
 }

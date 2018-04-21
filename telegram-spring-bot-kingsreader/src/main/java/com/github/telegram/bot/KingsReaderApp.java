@@ -18,9 +18,6 @@ package com.github.telegram.bot;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import static com.github.telegram.bot.platform.config.TelegramBotClientConfiguration.TELEGRAM_CLIENT_TOKEN;
-import static java.lang.String.format;
-
 /**
  * @author vincentruan
  * @version 1.0.0
@@ -29,7 +26,7 @@ import static java.lang.String.format;
 public class KingsReaderApp {
 
     public static void main(String[] args) {
-        SpringApplication.run(KingsReaderApp.class, format("--%s=%s", TELEGRAM_CLIENT_TOKEN, "{token}"));
+        SpringApplication.run(KingsReaderApp.class, args);
     }
 
 }
