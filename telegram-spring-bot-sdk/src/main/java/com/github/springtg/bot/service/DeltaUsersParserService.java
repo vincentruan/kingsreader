@@ -16,6 +16,7 @@ import static java.util.Collections.emptyList;
 /**
  * Parses users' ids information from the Dropbox Webhook notification message.
  * It only contains users, who make changes.
+ * @author vincentruan
  */
 @Service
 @Slf4j
