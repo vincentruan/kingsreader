@@ -1,4 +1,4 @@
-package com.github.springtg.dropbox.config;
+package com.github.storage.dropbox.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;

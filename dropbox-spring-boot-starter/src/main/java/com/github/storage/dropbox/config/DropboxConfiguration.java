@@ -1,4 +1,4 @@
-package com.github.springtg.dropbox.config;
+package com.github.storage.dropbox.config;
 
 import com.dropbox.core.DbxAppInfo;
 import com.dropbox.core.DbxRequestConfig;
@@ -16,14 +16,14 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ConditionalOnClass({DbxRequestConfig.class})
 @EnableConfigurationProperties(DropboxConfigProperties.class)
-public class DropboxConfig {
+public class DropboxConfiguration {
 
     @Value("${spring.application.name}")
     private String appName;
 
     private final DropboxConfigProperties dropboxConfigProperties;
 
-    public DropboxConfig(final DropboxConfigProperties dropboxConfigProperties) {
+    public DropboxConfiguration(final DropboxConfigProperties dropboxConfigProperties) {
         this.dropboxConfigProperties = dropboxConfigProperties;
     }
 

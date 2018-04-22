@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.springtg.bot.handler;
+package com.github.springtg.bot.kingsreader.handler;
 
 import com.github.springtg.bot.platform.client.TelegramBotApi;
 import com.github.springtg.bot.platform.client.command.Reply;

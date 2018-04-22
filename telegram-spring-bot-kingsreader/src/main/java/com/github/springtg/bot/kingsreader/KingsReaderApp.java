@@ -13,11 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.springtg.bot.handler;
+package com.github.springtg.bot.kingsreader;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
 /**
  * @author vincentruan
  * @version 1.0.0
  */
-public class EBookAutoSendHandler {
+@SpringBootApplication
+@ComponentScan(basePackages = {"com.github.springtg.bot", "com.github.storage.dropbox"})
+public class KingsReaderApp {
+
+    public static void main(String[] args) {
+        SpringApplication.run(KingsReaderApp.class, args);
+    }
+
 }

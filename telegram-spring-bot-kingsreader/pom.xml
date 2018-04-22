@@ -13,14 +13,16 @@
     <artifactId>telegram-spring-bot-kingsreader</artifactId>
     <version>1.0.0</version>
 
-    <properties>
-        <main.class>com.github.springtg.bot.KingsReaderApp</main.class>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>${project.parent.groupId}</groupId>
             <artifactId>telegram-spring-boot-starter</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>${project.parent.groupId}</groupId>
+            <artifactId>dropbox-spring-boot-starter</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
 
@@ -50,16 +52,6 @@
                         <descriptor>src/main/assembly/standalone.xml</descriptor>
                     </descriptors>
                 </configuration>
-                <!--<configuration>
-                    <archive>
-                        <manifest>
-                            <mainClass>${main.class}</mainClass>
-                        </manifest>
-                    </archive>
-                    <descriptorRefs>
-                        <descriptorRef>jar-with-dependencies</descriptorRef>
-                    </descriptorRefs>
-                </configuration>-->
                 <executions>
                     <execution>
                         <id>standalone</id> <!-- this is used for inheritance merges -->
@@ -69,17 +61,6 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
-            <plugin>
-                <artifactId>maven-jar-plugin</artifactId>
-                <configuration>
-                    <archive>
-                        <manifest>
-                            <addClasspath>true</addClasspath>
-                            <mainClass>${main.class}</mainClass>
-                        </manifest>
-                    </archive>
-                </configuration>
             </plugin>
         </plugins>
     </build>
