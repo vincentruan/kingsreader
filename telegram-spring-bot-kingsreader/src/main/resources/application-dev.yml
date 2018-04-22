@@ -9,6 +9,6 @@ telegram:
     token: test
     username: test
     proxy:
-      host: proxy.webank.com
+      host:
       port: 8080
       nonProxyHosts: localhost
