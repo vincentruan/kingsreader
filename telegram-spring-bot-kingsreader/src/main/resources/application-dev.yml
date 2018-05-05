@@ -4,11 +4,20 @@ logging:
     org.springframework: info
     org.springframework.boot: info
     com.github.springtg.bot: debug
-telegram:
-  client:
-    token: test
-    username: test
-    proxy:
-      host:
-      port: 8080
-      nonProxyHosts: localhost
+#telegram:
+#  client:
+#    proxy:
+#      host: 127.0.0.1
+#      port: 1080
+#      proxyProtocol: SOCKS_V5
+#      realmAuthScheme: BASIC
+#      nonProxyHosts:
+#        -localhost
+# Dropbox Properties
+dropbox:
+  app:
+    key: todo
+    secret: todo
+    redirectUri: http://localhost:8080/dropbox/finish-auth
+    sessionStore:
+      key: dropbox-auth-csrf-token

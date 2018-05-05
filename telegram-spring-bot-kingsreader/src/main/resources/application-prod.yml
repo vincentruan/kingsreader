@@ -1,4 +1,9 @@
+logging:
+  level:
+    root: warn
+    org.springframework: info
+    org.springframework.boot: info
+    com.github.springtg.bot: info
 telegram:
   client:
     token: test
-    username: test
