@@ -1,6 +1,6 @@
 package com.github.springtg.bot.platform.client.command.impl;
 
-import com.github.springtg.bot.platform.model.api.methods.send.SendPhoto;
+import org.telegram.telegrambots.api.methods.send.SendPhoto;
 import lombok.Getter;
 import lombok.ToString;
 

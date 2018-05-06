@@ -13,12 +13,13 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.SynchronousQueue;
+import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 import static com.github.springtg.bot.platform.client.command.ApiCommand.EMPTY_CALLBACK;
@@ -80,32 +81,51 @@ public class ApiCommandSenderImpl extends AbstractExecutionThreadService impleme
 
     @Override
     protected void startUp() {
-        apiCommandQueue = new ArrayBlockingQueue<>(apiCommandSenderConfiguration.getQueueSize());
+        apiCommandQueue = new LinkedBlockingQueue<>(apiCommandSenderConfiguration.getQueueSize());
 
-        apiCommandSenderExecutor = Executors.newFixedThreadPool(
-                apiCommandSenderConfiguration.getThreadCount(),
+        apiCommandSenderExecutor = createThreadPoolExecutor("ApiCommandSenderTask-%d");
+
+        apiCommandSenderCallbackExecutor = createThreadPoolExecutor("ApiCommandSenderCallbackTask-%d");
+
+    }
+
+    private ThreadPoolExecutor createThreadPoolExecutor(String threadNameFormat) {
+        return new ThreadPoolExecutor(apiCommandSenderConfiguration.getCorePoolSize(), apiCommandSenderConfiguration.getMaximumPoolSize(),
+                apiCommandSenderConfiguration.getKeepAliveSeconds(), TimeUnit.SECONDS,
+                createQueue(apiCommandSenderConfiguration.getQueueCapacity()),
                 new ThreadFactoryBuilder()
                         .setDaemon(true)
-                        .setNameFormat("ApiCommandSenderTask-%d")
+                        .setNameFormat(threadNameFormat)
                         .build());
+    }
 
-        apiCommandSenderCallbackExecutor = Executors.newFixedThreadPool(
-                apiCommandSenderConfiguration.getThreadCount(),
-                new ThreadFactoryBuilder()
-                        .setDaemon(true)
-                        .setNameFormat("ApiCommandSenderCallbackTask-%d")
-                        .build());
+    /**
+     * Create the BlockingQueue to use for the ThreadPoolExecutor.
+     * <p>A LinkedBlockingQueue instance will be created for a positive
+     * capacity value; a SynchronousQueue else.
+     *
+     * @param queueCapacity the specified queue capacity
+     * @return the BlockingQueue instance
+     * @see java.util.concurrent.LinkedBlockingQueue
+     * @see java.util.concurrent.SynchronousQueue
+     */
+    private BlockingQueue<Runnable> createQueue(int queueCapacity) {
+        if (queueCapacity > 0) {
+            return new LinkedBlockingQueue<>(queueCapacity);
+        } else {
+            return new SynchronousQueue<>();
+        }
     }
 
     @Override
     protected void triggerShutdown() {
         shutdownAndAwaitTermination(
                 apiCommandSenderExecutor,
-                2,
+                5,
                 TimeUnit.SECONDS);
         shutdownAndAwaitTermination(
                 apiCommandSenderCallbackExecutor,
-                2,
+                5,
                 TimeUnit.SECONDS);
     }
 

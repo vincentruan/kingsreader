@@ -14,8 +14,20 @@ import java.util.concurrent.TimeUnit;
 @Getter
 public class WorkerConfiguration {
 
-    @Value("${updates.worker.task.thread.size:4}")
-    private Integer threadCount;
+    @Value("${updates.worker.task.thread.corePoolSize:4}")
+    private int corePoolSize;
+
+    @Value("${updates.worker.task.thread.maximumPoolSize:32}")
+    private int maximumPoolSize;
+
+    @Value("${updates.worker.task.thread.keepAliveSeconds:60}")
+    private int keepAliveSeconds;
+
+    @Value("${updates.worker.task.thread.queueCapacity:" + Integer.MAX_VALUE + "}")
+    private int queueCapacity;
+
+    @Value("${updates.worker.task.queue.size:2048}")
+    private int queueSize;
 
     @Value("${updates.worker.task.thread.shutdown.timeout:5}")
     private long shutdownTimeout;

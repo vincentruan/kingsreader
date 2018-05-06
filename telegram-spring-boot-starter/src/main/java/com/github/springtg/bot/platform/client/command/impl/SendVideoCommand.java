@@ -1,6 +1,6 @@
 package com.github.springtg.bot.platform.client.command.impl;
 
-import com.github.springtg.bot.platform.model.api.methods.send.SendVideo;
+import org.telegram.telegrambots.api.methods.send.SendVideo;
 import lombok.Getter;
 import lombok.ToString;
 
