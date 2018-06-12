@@ -40,8 +40,8 @@ public class ClientProxyConfiguration {
         this.proxyType = proxyType;
     }
 
-    public void setProxyType(String protocol) {
-        if (StringUtils.hasText(protocol)) {
+    public void setProxyProtocol(String proxyProtocol) {
+        if (StringUtils.hasText(proxyProtocol)) {
             ProxyType[] allProxyTypes = ProxyType.values();
             StringBuilder sb = new StringBuilder();
             boolean isFirst = true;
@@ -51,13 +51,16 @@ public class ClientProxyConfiguration {
                 } else {
                     sb.append(',').append(proxyType.name());
                 }
-                if (proxyType.name().equalsIgnoreCase(protocol)) {
+                if (proxyType.name().equalsIgnoreCase(proxyProtocol)) {
                     this.proxyType = proxyType;
                     break;
                 }
                 isFirst = false;
             }
-            throw new IllegalArgumentException("proxy type must in ProxyType list [" + sb.toString() + "], case insensitive!");
+            if(this.proxyType == null) {
+                throw new IllegalArgumentException("proxy type must in ProxyType list [" + sb.toString() + "], case insensitive!");
+            }
+
         }
     }
 
@@ -81,31 +84,34 @@ public class ClientProxyConfiguration {
         return proxyServer;
     }
 
-    public void setNonProxyHosts(String nonProxyHosts) {
-        if (StringUtils.hasText(nonProxyHosts)) {
-            String[] nonProxyHostArray = nonProxyHosts.split(",");
-            this.nonProxyHosts = Arrays.asList(nonProxyHostArray);
-        }
+    public void setNonProxyHosts(List<String> nonProxyHosts) {
+        this.nonProxyHosts = nonProxyHosts;
     }
 
-    public void setAuthScheme(String authScheme) {
+    public void setAuthScheme(Realm.AuthScheme authScheme) {
+        this.authScheme = authScheme;
+    }
+
+    public void setRealmAuthScheme(String authScheme) {
         if (StringUtils.hasText(authScheme)) {
             Realm.AuthScheme[] allAuthSchemes = Realm.AuthScheme.values();
             StringBuilder sb = new StringBuilder();
             boolean isFirst = true;
-            for (Realm.AuthScheme realmAuthSchema : allAuthSchemes) {
+            for (Realm.AuthScheme realmAuthScheme : allAuthSchemes) {
                 if (isFirst) {
-                    sb.append(realmAuthSchema.name());
+                    sb.append(realmAuthScheme.name());
                 } else {
-                    sb.append(',').append(realmAuthSchema.name());
+                    sb.append(',').append(realmAuthScheme.name());
                 }
-                if (realmAuthSchema.name().equalsIgnoreCase(authScheme)) {
-                    this.authScheme = realmAuthSchema;
+                if (realmAuthScheme.name().equalsIgnoreCase(authScheme)) {
+                    this.authScheme = realmAuthScheme;
                     break;
                 }
                 isFirst = false;
             }
-            throw new IllegalArgumentException("auth-scheme must in Realm.AuthScheme list [" + sb.toString() + "], case insensitive!");
+            if(this.authScheme == null) {
+                throw new IllegalArgumentException("auth-scheme must in Realm.AuthScheme list [" + sb.toString() + "], case insensitive!");
+            }
         }
     }
 

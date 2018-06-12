@@ -44,6 +44,7 @@ import static org.telegram.telegrambots.api.methods.send.SendSticker.CHATID_FIEL
  */
 @Slf4j
 public class TelegramBotApiImpl implements TelegramBotApi {
+
     private static final String FILEID_FIELD = "file_id";
 
     private final TelegramBotHttpClient client;

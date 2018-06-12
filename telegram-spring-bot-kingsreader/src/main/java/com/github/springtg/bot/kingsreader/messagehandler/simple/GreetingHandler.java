@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.springtg.bot.kingsreader.handler;
+package com.github.springtg.bot.kingsreader.messagehandler.simple;
 
 import com.github.springtg.bot.platform.client.TelegramBotApi;
 import com.github.springtg.bot.platform.client.command.Reply;
@@ -42,7 +42,7 @@ public class GreetingHandler {
         User me = api.getMe().get();
 
         Message reply = api.reply(ReplyTo.to(updateEvent).withMessage(getMessageText(me))).get();
-        log.info("{}", reply);
+        log.info("reply to /me =>{}", reply);
 
         return ReplyTo.to(updateEvent).withMessage("Yes, that is me above!!!");
     }
@@ -50,4 +50,16 @@ public class GreetingHandler {
     private String getMessageText(User me) {
         return "Me is : " + me.getFirstName() + " " + me.getLastName();
     }
+
+    @MessageMapping(text = "Hi")
+    public Reply sayHi(UpdateEvent updateEvent) {
+        return ReplyTo.to(updateEvent).withMessage("Hi there!")
+                .setCallback(message -> System.out.println("Message sent"));
+    }
+
+    @MessageMapping(regexp = "(.*(g|G)ood.*morning.*)")
+    public Reply sayGoodMorning(UpdateEvent updateEvent) {
+        return ReplyTo.to(updateEvent).withMessage("Good morning! Happy to see you!");
+    }
+
 }

@@ -1,6 +1,6 @@
 package com.github.springtg.bot.platform.client.command.impl;
 
-import com.github.springtg.bot.platform.model.api.methods.send.SendAudio;
+import org.telegram.telegrambots.api.methods.send.SendAudio;
 import lombok.Getter;
 import lombok.ToString;
 

@@ -17,10 +17,12 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.validation.constraints.NotNull;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
@@ -80,20 +82,41 @@ public class UpdatesWorker extends AbstractExecutionThreadService {
     protected void startUp() {
         eventBus.register(this);
 
-        updatesWorkerExecutor = new ThreadPoolExecutor(workerConfiguration.getThreadCount(), workerConfiguration.getThreadCount(),
-                0L, TimeUnit.MILLISECONDS,
-                new LinkedBlockingQueue<Runnable>(),
-                new ThreadFactoryBuilder()
-                        .setDaemon(true)
-                        .setNameFormat("UpdatesWorkerTask-%d")
-                        .build());
-
+        updatesWorkerExecutor = createThreadPoolExecutor("UpdatesWorkerTask-%d");
 
         apiCommandSenderExecutor = Executors.newSingleThreadExecutor(
                 new ThreadFactoryBuilder()
                         .setDaemon(true)
                         .setNameFormat("ApiCommandSenderTask-%d")
                         .build());
+    }
+
+    public ThreadPoolExecutor createThreadPoolExecutor(String threadNameFormat) {
+        return new ThreadPoolExecutor(workerConfiguration.getCorePoolSize(), workerConfiguration.getMaximumPoolSize(),
+                workerConfiguration.getKeepAliveSeconds(), TimeUnit.SECONDS,
+                createQueue(workerConfiguration.getQueueCapacity()),
+                new ThreadFactoryBuilder()
+                        .setDaemon(true)
+                        .setNameFormat(threadNameFormat)
+                        .build());
+    }
+
+    /**
+     * Create the BlockingQueue to use for the ThreadPoolExecutor.
+     * <p>A LinkedBlockingQueue instance will be created for a positive
+     * capacity value; a SynchronousQueue else.
+     *
+     * @param queueCapacity the specified queue capacity
+     * @return the BlockingQueue instance
+     * @see java.util.concurrent.LinkedBlockingQueue
+     * @see java.util.concurrent.SynchronousQueue
+     */
+    private BlockingQueue<Runnable> createQueue(int queueCapacity) {
+        if (queueCapacity > 0) {
+            return new LinkedBlockingQueue<>(queueCapacity);
+        } else {
+            return new SynchronousQueue<>();
+        }
     }
 
     @Override
