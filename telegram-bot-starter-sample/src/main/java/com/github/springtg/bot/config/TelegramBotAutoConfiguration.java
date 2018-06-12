@@ -5,8 +5,10 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.bridge.SLF4JBridgeHandler;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.util.StringUtils;
 import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.TelegramBotsApi;
@@ -27,9 +29,9 @@ import java.util.List;
  *
  * @author xabgesagtx
  */
-//@Configuration
+@Configuration
 @Slf4j
-//@ConditionalOnClass(TelegramBotsApi.class)
+@ConditionalOnClass(TelegramBotsApi.class)
 public class TelegramBotAutoConfiguration {
 
     static {

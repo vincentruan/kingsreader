@@ -22,6 +22,7 @@
         <module>dropbox-spring-boot-starter</module>
         <module>telegram-spring-bot-sdk</module>
         <module>telegram-spring-bot-kingsreader</module>
+        <module>telegram-bot-starter-sample</module>
     </modules>
 
     <licenses>
