@@ -77,7 +77,7 @@ public class TelegramBotAutoConfiguration {
                 log.info("Registering polling bot: {}", bot.getBotUsername());
                 sessions.add(api.registerBot(bot));
             } catch (TelegramApiException e) {
-                log.error("Failed to register bot {} due to error {}", bot.getBotUsername(), e.getMessage());
+                log.error("Failed to register bot " + bot.getBotUsername() + " due to error", e);
             }
         });
         webHookBots.forEach(bot -> {
