@@ -3,7 +3,28 @@ spring:
     active: dev
   application:
     name: kingsreader
+  mail:
+    host: smtp.126.com
+    port: 465
+    protocol: smtps
+    username: rzw0813@126.com
+    password: neteasy6789
+    default-encoding: UTF-8
+    properties:
+      mail.smtp:
+        auth: true
+        socketFactory:
+          fallback: false
+          class: javax.net.ssl.SSLSocketFactory
+          port: 465
+        starttls:
+          enable: true
+          required: true
 logging:
   level:
     org.springframework.web: info
     org.springframework.boot: info
+app:
+  version: @project.version@
+  mail:
+    from: KingsReader<rzw0813@126.com>
