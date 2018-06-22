@@ -1,0 +1,75 @@
+/*
+ * Copyright [2018] [vincentruan]
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package com.github.springtg.bot;
+
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import org.springframework.mail.SimpleMailMessage;
+import org.thymeleaf.context.Context;
+import org.thymeleaf.context.IContext;
+
+import java.io.File;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * @author vincentruan
+ * @version 1.0.0
+ */
+public class RichMailMessageEvent extends SimpleMailMessage {
+
+    private List<MailInlineResource> inlineResources;
+
+    private String templateName;
+
+    private IContext context;
+
+    private Map<String, File> attachments;
+
+    public List<MailInlineResource> getInlineResources() {
+        return inlineResources;
+    }
+
+    public void setInlineResources(List<MailInlineResource> inlineResources) {
+        this.inlineResources = inlineResources;
+    }
+
+    public String getTemplateName() {
+        return templateName;
+    }
+
+    public void setTemplateName(String templateName) {
+        this.templateName = templateName;
+    }
+
+    public IContext getContext() {
+        return null == context ? new Context() : context;
+    }
+
+    public void setContext(IContext context) {
+        this.context = context;
+    }
+
+    public Map<String, File> getAttachments() {
+        return attachments;
+    }
+
+    public void setAttachments(Map<String, File> attachments) {
+        this.attachments = attachments;
+    }
+
+
+}

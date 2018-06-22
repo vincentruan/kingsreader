@@ -17,18 +17,11 @@
         <dependency>
             <groupId>${project.parent.groupId}</groupId>
             <artifactId>telegram-spring-boot-starter</artifactId>
-            <version>${project.parent.version}</version>
         </dependency>
 
         <dependency>
             <groupId>${project.parent.groupId}</groupId>
             <artifactId>dropbox-spring-boot-starter</artifactId>
-            <version>${project.parent.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-autoconfigure</artifactId>
         </dependency>
 
         <dependency>
@@ -44,6 +37,11 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.retry</groupId>
+            <artifactId>spring-retry</artifactId>
         </dependency>
 
         <dependency>

@@ -13,16 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.springtg.bot.kingsreader.event;
+package com.github.springtg.bot.event;
 
+import com.github.springtg.bot.RichMailMessageEvent;
+import com.github.springtg.bot.manager.EmailNotifyManager;
 import lombok.extern.slf4j.Slf4j;
-import man.autolife.autobooking.service.notify.AutoBookingMailNotifyService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
+import org.thymeleaf.TemplateEngine;
 
 /**
  * @author vincentruan
@@ -33,19 +35,29 @@ import org.springframework.stereotype.Component;
 public class MailNotifyEventListener {
 
     @Autowired
-    private AutoBookingMailNotifyService autoBookingMailNotifyService;
+    private EmailNotifyManager emailNotifyManager;
 
-    @Value("${app.autobooking.mail.to}")
-    private String[] mailTo;
+    @Autowired
+    private TemplateEngine templateEngine;
 
     @Async
     @EventListener
-    void asyncNotifyAutoBooking(AutoBookingSuccessEvent event) throws Exception {
+    void asyncNotifyAutoBooking(RichMailMessageEvent event) throws Exception {
         log.info("received auto booking success event: {}", event);
+        if(null == event) {
+            return;
+        }
 
-        String subject = "自动预定" + event.getBookingDate() + "的模拟课程成功";
-        String mailBody = "自动预定" + event.getBookingDate() + "的模拟课程成功, 预定时段: " + StringUtils.join(event.getBookingTimeFrames(), ',');
-        autoBookingMailNotifyService.sendSimpleMail(mailTo, subject, mailBody);
+        if(StringUtils.isBlank(event.getText())) {
+            if (StringUtils.isNotBlank(event.getTemplateName())) {
+                log.warn("mail body is empty, ignore!");
+                return;
+            }
+            String emailContent = templateEngine.process(event.getTemplateName(), event.getContext());
+            event.setText(emailContent);
+        }
+
+        emailNotifyManager.sendMail(event, event.getAttachments(), event.getInlineResources());
     }
 
 }
