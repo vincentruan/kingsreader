@@ -71,6 +71,8 @@
 
         <telegrambots.version>3.6</telegrambots.version>
         <springockito.version>1.0.9</springockito.version>
+        <jaxrs.api.spec.version>2.0</jaxrs.api.spec.version>
+        <jaxrs.api.impl.version>2.0.1</jaxrs.api.impl.version>
     </properties>
 
     <dependencies>
@@ -154,19 +156,6 @@
             </dependency>
 
             <dependency>
-                <groupId>org.kubek2k</groupId>
-                <artifactId>springockito</artifactId>
-                <version>${springockito.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.kubek2k</groupId>
-                <artifactId>springockito-annotations</artifactId>
-                <version>${springockito.version}</version>
-                <scope>test</scope>
-            </dependency>
-
-            <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-collections4</artifactId>
                 <version>4.1</version>
@@ -183,6 +172,25 @@
                 <artifactId>telegram-spring-boot-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>javax.ws.rs</groupId>
+                <artifactId>javax.ws.rs-api</artifactId>
+                <version>${jaxrs.api.impl.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.kubek2k</groupId>
+                <artifactId>springockito</artifactId>
+                <version>${springockito.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.kubek2k</groupId>
+                <artifactId>springockito-annotations</artifactId>
+                <version>${springockito.version}</version>
+                <scope>test</scope>
+            </dependency>
+
 
         </dependencies>
     </dependencyManagement>

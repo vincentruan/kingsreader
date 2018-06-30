@@ -2,12 +2,12 @@ package org.telegram.telegrambots.updatesreceivers;
 
 import com.google.inject.Inject;
 
-import org.glassfish.grizzly.http.server.HttpServer;
+/*import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.grizzly.ssl.SSLContextConfigurator;
 import org.glassfish.grizzly.ssl.SSLEngineConfigurator;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.jackson.JacksonFeature;
-import org.glassfish.jersey.server.ResourceConfig;
+import org.glassfish.jersey.server.ResourceConfig;*/
 import org.telegram.telegrambots.exceptions.TelegramApiRequestException;
 import org.telegram.telegrambots.generics.Webhook;
 import org.telegram.telegrambots.generics.WebhookBot;
@@ -49,7 +49,7 @@ public class DefaultWebhook implements Webhook {
     }
 
     public void startServer() throws TelegramApiRequestException {
-        ResourceConfig rc = new ResourceConfig();
+        /*ResourceConfig rc = new ResourceConfig();
         rc.register(restApi);
         rc.register(JacksonFeature.class);
 
@@ -71,7 +71,7 @@ public class DefaultWebhook implements Webhook {
             grizzlyServer.start();
         } catch (IOException e) {
             throw new TelegramApiRequestException("Error starting webhook server", e);
-        }
+        }*/
     }
 
     private URI getBaseURI() {

@@ -2,6 +2,7 @@ package org.telegram.telegrambots.bots;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -89,8 +90,8 @@ public abstract class DefaultAbsSender extends AbsSender {
     // Send Requests
 
     public final java.io.File downloadFile(String filePath) throws TelegramApiException {
-        if(filePath == null || filePath.isEmpty()){
-            throw new TelegramApiException("Parameter file can not be null");
+        if(StringUtils.isEmpty(filePath)){
+            throw new TelegramApiException("Parameter file path can not be null");
         }
         String url = File.getFileUrl(getBotToken(), filePath);
         String tempFileName = Long.toString(System.currentTimeMillis());
