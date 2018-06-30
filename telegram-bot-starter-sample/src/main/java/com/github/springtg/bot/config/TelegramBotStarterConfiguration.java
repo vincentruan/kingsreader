@@ -5,6 +5,7 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.bridge.SLF4JBridgeHandler;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
@@ -12,41 +13,30 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.util.StringUtils;
 import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.TelegramBotsApi;
-import org.telegram.telegrambots.bots.TelegramLongPollingBot;
-import org.telegram.telegrambots.bots.TelegramWebhookBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 import org.telegram.telegrambots.exceptions.TelegramApiRequestException;
 import org.telegram.telegrambots.generics.BotSession;
+import org.telegram.telegrambots.generics.LongPollingBot;
+import org.telegram.telegrambots.generics.WebhookBot;
 import org.telegram.telegrambots.logging.BotLogger;
 
-import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Auto configuration for telegram bots to automatically start bots that are configured as beans.
- *
- * @author xabgesagtx
+ * Receives all beand which are #LongPollingBot and #WebhookBot and register them in #TelegramBotsApi.
+ * #TelegramBotsApi added to spring context as well
  */
 @Configuration
-@Slf4j
 @ConditionalOnClass(TelegramBotsApi.class)
-public class TelegramBotAutoConfiguration {
+@Slf4j
+public class TelegramBotStarterConfiguration implements CommandLineRunner {
 
-    static {
-        // SLF4JBridgeHandler.install();
-        BotLogger.registerLogger(new SLF4JBridgeHandler());
-        ApiContextInitializer.init();
-    }
 
-    private List<BotSession> sessions = new ArrayList<>();
+    private final List<LongPollingBot> longPollingBots;
 
-    @Autowired(required = false)
-    private List<TelegramLongPollingBot> pollingBots = new ArrayList<>();
-
-    @Autowired(required = false)
-    private List<TelegramWebhookBot> webHookBots = new ArrayList<>();
+    private final List<WebhookBot> webHookBots;
 
     @Getter
     @Setter
@@ -68,11 +58,29 @@ public class TelegramBotAutoConfiguration {
     @Setter
     private String pathToCertificate;
 
-    @PostConstruct
-    public void start() throws TelegramApiRequestException {
+
+    private List<BotSession> sessions = new ArrayList<>();
+
+    static {
+        // SLF4JBridgeHandler.install();
+        BotLogger.registerLogger(new SLF4JBridgeHandler());
+        ApiContextInitializer.init();
+    }
+
+    @Autowired
+    private TelegramBotsApi telegramBotsApi;
+
+    public TelegramBotStarterConfiguration(List<LongPollingBot> longPollingBots,
+                                           List<WebhookBot> webHookBots) {
+        this.longPollingBots = longPollingBots;
+        this.webHookBots = webHookBots;
+    }
+
+    @Override
+    public void run(String... args) throws TelegramApiRequestException {
         log.info("Starting auto config for telegram bots");
-        TelegramBotsApi api = getApi();
-        pollingBots.forEach(bot -> {
+        TelegramBotsApi api = telegramBotsApi();
+        longPollingBots.forEach(bot -> {
             try {
                 log.info("Registering polling bot: {}", bot.getBotUsername());
                 sessions.add(api.registerBot(bot));
@@ -90,16 +98,10 @@ public class TelegramBotAutoConfiguration {
         });
     }
 
-    /**
-     * Get API object depending on configured properties.
-     * If no properties are configured, the API object won't support webhooks.
-     *
-     * @return api object
-     * @throws TelegramApiRequestException
-     */
+
     @Bean
-    @ConditionalOnMissingBean
-    public TelegramBotsApi getApi() throws TelegramApiRequestException {
+    @ConditionalOnMissingBean(TelegramBotsApi.class)
+    public TelegramBotsApi telegramBotsApi() throws TelegramApiRequestException {
         TelegramBotsApi result;
         if (!StringUtils.isEmpty(externalUrl) && !StringUtils.isEmpty(internalUrl)) {
             if (!StringUtils.isEmpty(keyStore) && !StringUtils.isEmpty(keyStorePassword)) {
@@ -129,5 +131,4 @@ public class TelegramBotAutoConfiguration {
             }
         });
     }
-
 }
