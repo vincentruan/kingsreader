@@ -172,6 +172,18 @@
                 <version>4.1</version>
             </dependency>
 
+            <dependency>
+                <groupId>${project.parent.groupId}</groupId>
+                <artifactId>telegram-spring-bot-sdk</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>${project.parent.groupId}</groupId>
+                <artifactId>telegram-spring-boot-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
