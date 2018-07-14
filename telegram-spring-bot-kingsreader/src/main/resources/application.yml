@@ -7,8 +7,8 @@ spring:
     host: smtp.126.com
     port: 465
     protocol: smtps
-    username: rzw0813@126.com
-    password: neteasy6789
+    username:
+    password:
     default-encoding: UTF-8
     properties:
       mail.smtp:
